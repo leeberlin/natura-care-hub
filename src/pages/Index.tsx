@@ -5,7 +5,10 @@ import Welcome from "@/components/Welcome";
 import Services from "@/components/Services";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import HowItWorks from "@/components/HowItWorks";
+import CVGSection from "@/components/CVGSection";
+import WaveFooter from "@/components/WaveFooter";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 
 const Index = () => {
   return (
@@ -17,7 +20,10 @@ const Index = () => {
       <Services />
       <WhyChooseUs />
       <HowItWorks />
+      <CVGSection />
+      <WaveFooter />
       <Footer />
+      <BackToTop />
     </div>
   );
 };

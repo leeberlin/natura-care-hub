@@ -1,6 +1,7 @@
 import { Phone, Menu, MapPin } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,21 +31,27 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <a href="#home" className="text-foreground hover:text-primary transition-colors font-source">
+            <Link to="/" className="text-foreground hover:text-primary transition-colors font-source">
               Home
-            </a>
-            <a href="#services" className="text-foreground hover:text-primary transition-colors font-source">
-              Leistungen
-            </a>
-            <a href="#about" className="text-foreground hover:text-primary transition-colors font-source">
+            </Link>
+            <Link to="/about" className="text-foreground hover:text-primary transition-colors font-source">
               Über uns
-            </a>
-            <a href="#costs" className="text-foreground hover:text-primary transition-colors font-source">
-              Kosten
-            </a>
-            <a href="#contact" className="text-foreground hover:text-primary transition-colors font-source">
+            </Link>
+            <Link to="/services" className="text-foreground hover:text-primary transition-colors font-source">
+              Leistungen
+            </Link>
+            <Link to="/team" className="text-foreground hover:text-primary transition-colors font-source">
+              Team
+            </Link>
+            <Link to="/blog" className="text-foreground hover:text-primary transition-colors font-source">
+              Blog
+            </Link>
+            <Link to="/faq" className="text-foreground hover:text-primary transition-colors font-source">
+              FAQ
+            </Link>
+            <Link to="/contact" className="text-foreground hover:text-primary transition-colors font-source">
               Kontakt
-            </a>
+            </Link>
           </nav>
 
           {/* Contact Info & CTA */}
@@ -72,21 +79,27 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden pb-4 border-t border-border/50 pt-4 mt-4">
             <nav className="flex flex-col space-y-3">
-              <a href="#home" className="text-foreground hover:text-primary transition-colors font-source py-2">
+              <Link to="/" className="text-foreground hover:text-primary transition-colors font-source py-2">
                 Home
-              </a>
-              <a href="#services" className="text-foreground hover:text-primary transition-colors font-source py-2">
-                Leistungen
-              </a>
-              <a href="#about" className="text-foreground hover:text-primary transition-colors font-source py-2">
+              </Link>
+              <Link to="/about" className="text-foreground hover:text-primary transition-colors font-source py-2">
                 Über uns
-              </a>
-              <a href="#costs" className="text-foreground hover:text-primary transition-colors font-source py-2">
-                Kosten
-              </a>
-              <a href="#contact" className="text-foreground hover:text-primary transition-colors font-source py-2">
+              </Link>
+              <Link to="/services" className="text-foreground hover:text-primary transition-colors font-source py-2">
+                Leistungen
+              </Link>
+              <Link to="/team" className="text-foreground hover:text-primary transition-colors font-source py-2">
+                Team
+              </Link>
+              <Link to="/blog" className="text-foreground hover:text-primary transition-colors font-source py-2">
+                Blog
+              </Link>
+              <Link to="/faq" className="text-foreground hover:text-primary transition-colors font-source py-2">
+                FAQ
+              </Link>
+              <Link to="/contact" className="text-foreground hover:text-primary transition-colors font-source py-2">
                 Kontakt
-              </a>
+              </Link>
             </nav>
             <div className="mt-4 pt-4 border-t border-border/50">
               <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-3">

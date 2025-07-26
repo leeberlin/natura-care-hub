@@ -188,13 +188,13 @@ const Footer = () => {
             </div>
             
             <div className="flex items-center space-x-6 text-sm">
-              <a href="#" className="text-white/60 hover:text-white transition-colors font-source">
+              <a href="/impressum" className="text-white/60 hover:text-white transition-colors font-source">
                 Impressum
               </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors font-source">
+              <a href="/datenschutz" className="text-white/60 hover:text-white transition-colors font-source">
                 Datenschutz
               </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors font-source">
+              <a href="/agb" className="text-white/60 hover:text-white transition-colors font-source">
                 AGBs
               </a>
             </div>

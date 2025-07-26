@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { 
   Heart, 
@@ -13,6 +14,7 @@ import householdHelpImage from "@/assets/household-help.jpg";
 import companionCareImage from "@/assets/companion-care.jpg";
 
 const Services = () => {
+  const [hoveredService, setHoveredService] = useState<number | null>(null);
   const services = [
     {
       id: "basic-care",
