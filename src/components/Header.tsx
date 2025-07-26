@@ -11,8 +11,12 @@ const Header = () => {
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-hero rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl font-nunito">N</span>
+            <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+              <img 
+                src="/lovable-uploads/7e9df2db-9333-4d29-85cc-b32f727b93cc.png" 
+                alt="Natura Pflegedienst Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <h1 className="text-xl font-bold text-nature-charcoal font-nunito">
