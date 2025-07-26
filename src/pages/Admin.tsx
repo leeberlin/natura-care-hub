@@ -11,6 +11,7 @@ import { Calendar, Users, Clock, CheckCircle, XCircle, Download, Search, Moon, S
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdminDigitalBeratung from "@/components/AdminDigitalBeratung";
+import AdminChatbox from "@/components/AdminChatbox";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
 
@@ -185,9 +186,9 @@ const Admin = () => {
             </div>
           </div>
 
-          {/* Enhanced Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-5 p-2 rounded-2xl shadow-xl border bg-white/80 border-gray-200/50 backdrop-blur-lg">
+            {/* Enhanced Tabs */}
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-6 p-2 rounded-2xl shadow-xl border bg-white/80 border-gray-200/50 backdrop-blur-lg">
               <TabsTrigger 
                 value="overview"
                 className={`rounded-xl font-semibold transition-all duration-300 relative overflow-hidden font-nunito ${
@@ -251,6 +252,19 @@ const Admin = () => {
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
                   <span>Kontakte</span>
+                </div>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="chatbox"
+                className={`rounded-xl font-semibold transition-all duration-300 relative overflow-hidden font-nunito ${
+                  activeTab === "chatbox"
+                    ? "bg-gradient-to-r from-teal-600 to-cyan-700 text-white shadow-lg"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100/80"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Chatbox</span>
                 </div>
               </TabsTrigger>
             </TabsList>
@@ -479,6 +493,11 @@ const Admin = () => {
                   </div>
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            {/* Chatbox Tab */}
+            <TabsContent value="chatbox" className="space-y-8 mt-8">
+              <AdminChatbox />
             </TabsContent>
           </Tabs>
         </div>
