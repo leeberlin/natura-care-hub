@@ -11,6 +11,7 @@ import CVGSection from "@/components/CVGSection";
 import WaveFooter from "@/components/WaveFooter";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import ChatWidget from "@/components/chatbox/ChatWidget";
 
 const Index = () => {
   return (
@@ -28,6 +29,7 @@ const Index = () => {
       <WaveFooter />
       <Footer />
       <BackToTop />
+      <ChatWidget />
     </div>
   );
 };
