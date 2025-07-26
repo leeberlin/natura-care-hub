@@ -69,35 +69,40 @@ export function KalenderAuswahl({ onDateTimeSelect }: KalenderAuswahlProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Calendar */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-xl font-bold text-foreground flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                <CalendarIcon className="w-4 h-4 text-primary" />
+              </div>
               Verfügbare Tage
             </h3>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={prevMonth}
-                className="h-8 w-8 p-0"
+                className="h-10 w-10 p-0 rounded-xl border-2 hover:bg-primary/5 hover:border-primary/20 transition-all"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-              <span className="text-sm font-medium min-w-[120px] text-center">
-                {format(currentMonth, 'MMMM yyyy', { locale: de })}
-              </span>
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl px-4 py-2 min-w-[140px] text-center">
+                <span className="text-sm font-bold text-primary">
+                  {format(currentMonth, 'MMMM yyyy', { locale: de })}
+                </span>
+              </div>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={nextMonth}
-                className="h-8 w-8 p-0"
+                className="h-10 w-10 p-0 rounded-xl border-2 hover:bg-primary/5 hover:border-primary/20 transition-all"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
           
-          <div className="border rounded-lg p-4">
+          <div className="bg-gradient-to-br from-card via-card to-primary/5 rounded-2xl shadow-lg border-2 border-primary/10 p-6">
             <Calendar
               mode="single"
               selected={selectedDate}
@@ -106,13 +111,21 @@ export function KalenderAuswahl({ onDateTimeSelect }: KalenderAuswahlProps) {
               month={currentMonth}
               onMonthChange={setCurrentMonth}
               locale={de}
-              className="w-full pointer-events-auto"
+              className="w-full pointer-events-auto [&_.rdp-day]:rounded-xl [&_.rdp-day]:h-10 [&_.rdp-day]:w-10 [&_.rdp-day_button]:h-10 [&_.rdp-day_button]:w-10 [&_.rdp-day_button]:rounded-xl [&_.rdp-day_button]:font-medium [&_.rdp-day_button:hover]:bg-primary/10 [&_.rdp-day_button:hover]:text-primary [&_.rdp-day_selected]:bg-primary [&_.rdp-day_selected]:text-primary-foreground [&_.rdp-day_selected]:shadow-lg [&_.rdp-day_disabled]:opacity-30 [&_.rdp-day_outside]:opacity-50 [&_.rdp-head_cell]:font-bold [&_.rdp-head_cell]:text-primary [&_.rdp-head_cell]:text-sm [&_.rdp-table]:w-full"
             />
           </div>
           
-          <div className="text-sm text-muted-foreground space-y-1">
-            <p>• Termine sind Montag bis Freitag verfügbar</p>
-            <p>• Keine Termine an Wochenenden</p>
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-white text-xs font-bold">!</span>
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-amber-800">Verfügbarkeit:</p>
+                <p className="text-sm text-amber-700">• Termine sind Montag bis Freitag verfügbar</p>
+                <p className="text-sm text-amber-700">• Keine Termine an Wochenenden</p>
+              </div>
+            </div>
           </div>
         </div>
 
