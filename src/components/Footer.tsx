@@ -52,7 +52,7 @@ const Footer = () => {
   return (
     <footer className="bg-nature-charcoal text-white">
       {/* Beautiful Image Gallery Section */}
-      <div className="border-b border-white/10 bg-gradient-to-r from-nature-sage via-nature-cream to-nature-coral">
+      <div className="border-b border-white/10 bg-gradient-to-r from-nature-sage/30 via-nature-cream/20 to-nature-sage/40">
         <div className="container mx-auto px-4 py-16">
           <div className="text-center mb-12">
             <h3 className="text-3xl md:text-4xl font-bold mb-4 font-nunito text-nature-charcoal">
