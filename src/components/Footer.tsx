@@ -51,28 +51,81 @@ const Footer = () => {
 
   return (
     <footer className="bg-nature-charcoal text-white">
-      {/* Newsletter Section */}
-      <div className="border-b border-white/10 bg-nature-sage">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 font-nunito">
-              Melden Sie sich zu unserem kostenlosen Pflege-Newsletter an
+      {/* Beautiful Image Gallery Section */}
+      <div className="border-b border-white/10 bg-gradient-to-r from-nature-sage via-nature-cream to-nature-coral">
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold mb-4 font-nunito text-nature-charcoal">
+              Pflege mit Herz und Professionalität
             </h3>
-            <p className="text-lg text-white/80 mb-8 font-source">
-              Erhalten Sie wertvolle Tipps, aktuelle Informationen zu Pflegeleistungen und 
-              Neuigkeiten aus der Pflegebranche direkt in Ihr Postfach.
+            <p className="text-lg text-nature-charcoal/80 mb-8 font-source max-w-2xl mx-auto">
+              Erleben Sie die warme Atmosphäre und professionelle Betreuung, 
+              die unsere Pflegekräfte täglich mit Hingabe leisten.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="Ihre E-Mail-Adresse"
-                className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-nature-coral font-source"
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+            <div className="group relative overflow-hidden rounded-2xl aspect-square bg-white/20 backdrop-blur-sm border border-white/30">
+              <img 
+                src="/src/assets/care-assistance.jpg" 
+                alt="Pflegeberatung"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
-              <Button variant="coral" className="font-nunito group">
-                Anmelden
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <div className="absolute inset-0 bg-gradient-to-t from-nature-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="font-semibold font-nunito">Beratung</h4>
+                  <p className="text-sm font-source">Individuelle Pflege</p>
+                </div>
+              </div>
             </div>
+            
+            <div className="group relative overflow-hidden rounded-2xl aspect-square bg-white/20 backdrop-blur-sm border border-white/30">
+              <img 
+                src="/src/assets/companion-care.jpg" 
+                alt="Betreuung"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-nature-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="font-semibold font-nunito">Betreuung</h4>
+                  <p className="text-sm font-source">Mit Einfühlungsvermögen</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-2xl aspect-square bg-white/20 backdrop-blur-sm border border-white/30">
+              <img 
+                src="/src/assets/household-help.jpg" 
+                alt="Hauswirtschaft"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-nature-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="font-semibold font-nunito">Hauswirtschaft</h4>
+                  <p className="text-sm font-source">Alltagsunterstützung</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-2xl aspect-square bg-white/20 backdrop-blur-sm border border-white/30">
+              <img 
+                src="/src/assets/hero-care.jpg" 
+                alt="24h Pflege"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-nature-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="font-semibold font-nunito">24h Betreuung</h4>
+                  <p className="text-sm font-source">Rund um die Uhr</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center mt-12">
+            <Button variant="default" size="lg" className="bg-nature-charcoal hover:bg-nature-charcoal/90 text-white font-nunito">
+              Mehr über unsere Leistungen erfahren
+            </Button>
           </div>
         </div>
       </div>
