@@ -106,7 +106,7 @@ export function KalenderAuswahl({ onDateTimeSelect }: KalenderAuswahlProps) {
               month={currentMonth}
               onMonthChange={setCurrentMonth}
               locale={de}
-              className="w-full"
+              className="w-full pointer-events-auto"
             />
           </div>
           

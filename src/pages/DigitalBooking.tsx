@@ -48,8 +48,8 @@ export default function DigitalBooking() {
   };
 
   const beraterInfo = {
-    name: 'Sarah Schmidt',
-    titel: 'Qualifizierte Pflegeberaterin',
+    name: 'Herr Tuan Pham',
+    titel: 'Geschäftsführer & Pflegedienstleitung',
     avatar: '/berater-avatar.jpg'
   };
 

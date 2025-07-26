@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { usePrintStyles } from './print-styles';
 
 interface TerminBestaetigungProps {
   bookingData: any;
@@ -14,48 +15,92 @@ interface TerminBestaetigungProps {
 }
 
 export function TerminBestaetigung({ bookingData, beraterInfo }: TerminBestaetigungProps) {
+  usePrintStyles();
+  
   const handlePrint = () => {
     window.print();
   };
 
   const handleDownload = () => {
-    // Create a simple text summary for download
-    const summary = `
-TERMINBESTÄTIGUNG - NATURA PFLEGEDIENST GMBH
+    // Create formatted HTML for better download
+    const htmlContent = `
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminbestätigung - Natura Pflegedienst GmbH</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+    .header { text-align: center; background: #005F72; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+    .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+    .highlight { background: #E6F3F7; padding: 10px; border-radius: 5px; }
+    .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .contact-info { background: #f8f9fa; padding: 15px; border-radius: 8px; }
+    h1, h2, h3 { color: #005F72; }
+    .booking-id { font-weight: bold; color: #5DADE2; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>TERMINBESTÄTIGUNG</h1>
+    <h2>Natura Pflegedienst GmbH</h2>
+  </div>
+  
+  <div class="highlight">
+    <p><strong>Buchungs-ID:</strong> <span class="booking-id">${bookingData.bookingId}</span></p>
+  </div>
+  
+  <div class="two-columns">
+    <div class="section">
+      <h3>📅 Termin Details</h3>
+      <p><strong>Datum:</strong> ${format(bookingData.selectedDate, 'EEEE, dd. MMMM yyyy', { locale: de })}</p>
+      <p><strong>Uhrzeit:</strong> ${bookingData.selectedTime} Uhr (MEZ)</p>
+      <p><strong>Art:</strong> ${getConsultationType(bookingData.contactData?.kommunikations_praeferenz)}</p>
+    </div>
+    
+    <div class="section">
+      <h3>👤 Ihre Kontaktdaten</h3>
+      <p><strong>Name:</strong> ${bookingData.contactData?.name}</p>
+      <p><strong>E-Mail:</strong> ${bookingData.contactData?.email}</p>
+      <p><strong>Telefon:</strong> ${bookingData.contactData?.phone}</p>
+      <p><strong>Pflegegrad:</strong> ${getPflegegradLabel(bookingData.contactData?.pflegegrad)}</p>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h3>👨‍⚕️ Ihr Berater</h3>
+    <p><strong>Name:</strong> ${beraterInfo.name}</p>
+    <p><strong>Titel:</strong> ${beraterInfo.titel}</p>
+  </div>
+  
+  <div class="section">
+    <h3>📋 Vorbereitung für Ihren Termin</h3>
+    <ul>
+      <li>✓ Versicherungskarte bereithalten (Kranken- und Pflegeversicherung)</li>
+      <li>✓ Aktuelle Pflegebescheide sammeln (falls vorhanden)</li>
+      <li>✓ Fragen zur Pflegesituation notieren</li>
+      ${bookingData.contactData?.kommunikations_praeferenz === 'video' ? '<li>✓ Internetverbindung und Kamera/Mikrofon prüfen</li>' : ''}
+    </ul>
+  </div>
+  
+  <div class="contact-info">
+    <h3>📞 Kontakt bei Fragen</h3>
+    <p><strong>Natura Pflegedienst GmbH</strong><br>
+    Killianstraße 119a<br>
+    90425 Nürnberg</p>
+    <p><strong>Telefon:</strong> +49 911 123456<br>
+    <strong>E-Mail:</strong> info@natura-pflegedienst.de</p>
+    <p><em>Bei Terminänderungen oder -absagen kontaktieren Sie uns bitte mindestens 24 Stunden im Voraus.</em></p>
+  </div>
+</body>
+</html>`;
 
-Buchungs-ID: ${bookingData.bookingId}
-Datum: ${format(bookingData.selectedDate, 'EEEE, dd. MMMM yyyy', { locale: de })}
-Uhrzeit: ${bookingData.selectedTime} Uhr
-Art: ${getConsultationType(bookingData.contactData?.kommunikations_praeferenz)}
-
-Kontaktdaten:
-Name: ${bookingData.contactData?.name}
-E-Mail: ${bookingData.contactData?.email}
-Telefon: ${bookingData.contactData?.phone}
-Pflegegrad: ${getPflegegradLabel(bookingData.contactData?.pflegegrad)}
-
-Berater: ${beraterInfo.name}
-Titel: ${beraterInfo.titel}
-
-Vorbereitung:
-- Versicherungskarte bereithalten
-- Aktuelle Pflegebescheide sammeln
-- Fragen zur Pflegesituation notieren
-- Bei Video-Beratung: Internetverbindung prüfen
-
-Kontakt:
-Natura Pflegedienst GmbH
-Killianstraße 119a
-90425 Nürnberg
-Telefon: +49 911 123456
-E-Mail: info@natura-pflegedienst.de
-`;
-
-    const blob = new Blob([summary], { type: 'text/plain' });
+    const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Terminbestätigung_${bookingData.bookingId}.txt`;
+    a.download = `Terminbestätigung_${bookingData.bookingId}.html`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -85,9 +130,9 @@ E-Mail: info@natura-pflegedienst.de
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 print-area">
       {/* Success Header */}
-      <div className="text-center">
+      <div className="text-center print-header">
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle className="w-8 h-8 text-green-600" />
         </div>
@@ -100,7 +145,7 @@ E-Mail: info@natura-pflegedienst.de
       </div>
 
       {/* Booking Details Card */}
-      <Card className="p-6 space-y-6">
+      <Card className="p-6 space-y-6 print-section print-avoid-break">
         <div className="text-center border-b pb-4">
           <h3 className="text-lg font-semibold text-foreground mb-2">
             Ihre Terminbestätigung
@@ -110,7 +155,7 @@ E-Mail: info@natura-pflegedienst.de
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print-two-column">
           {/* Appointment Details */}
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground flex items-center gap-2">
@@ -240,7 +285,7 @@ E-Mail: info@natura-pflegedienst.de
       </Card>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4 no-print">
         <Button 
           onClick={handlePrint}
           variant="outline"
