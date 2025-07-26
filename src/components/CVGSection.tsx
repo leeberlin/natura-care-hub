@@ -1,14 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
-
 const CVGSection = () => {
-  return (
-    <section 
-      className="relative py-20 bg-cover bg-center bg-fixed"
-      style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1200&q=80')`
-      }}
-    >
+  return <section className="relative py-20 bg-cover bg-center bg-fixed" style={{
+    backgroundImage: `url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1200&q=80')`
+  }}>
       <div className="absolute inset-0 bg-nature-charcoal/70"></div>
       
       <div className="relative container mx-auto px-4">
@@ -18,10 +13,7 @@ const CVGSection = () => {
             <span className="text-nature-coral">den Unterschied</span>
           </h2>
           
-          <p className="text-xl md:text-2xl mb-12 opacity-90 font-source leading-relaxed">
-            Bei Natura Pflegedienst steht der Mensch im Mittelpunkt. Wir verbinden 
-            professionelle Kompetenz mit echter Herzlichkeit.
-          </p>
+          <p className="text-xl md:text-2xl mb-12 opacity-90 font-source leading-relaxed">Bei Natura Pflegedienst steht der Mensch im Mittelpunkt. Wir verbinden professionelle Kompetenz mit echter Herzlichkeit.</p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button variant="coral" size="lg" className="font-nunito group text-lg px-8 py-4">
@@ -37,7 +29,7 @@ const CVGSection = () => {
           {/* Trust indicators */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-white/20">
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-nature-coral mb-2 font-nunito">15+</div>
+              <div className="text-3xl md:text-4xl font-bold text-nature-coral mb-2 font-nunito">10+</div>
               <div className="text-white/80 font-source">Jahre Erfahrung</div>
             </div>
             <div className="text-center">
@@ -55,8 +47,6 @@ const CVGSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CVGSection;

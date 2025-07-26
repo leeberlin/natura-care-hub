@@ -1,9 +1,7 @@
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
-
 const CompanyValues = () => {
-  return (
-    <section className="py-20 bg-gradient-to-br from-teal-50 via-emerald-50 to-green-50">
+  return <section className="py-20 bg-gradient-to-br from-teal-50 via-emerald-50 to-green-50 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-6 font-nunito leading-tight">
@@ -29,7 +27,7 @@ const CompanyValues = () => {
             </p>
           </div>
 
-          <div className="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 rounded-2xl p-8 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 p-8 text-white relative overflow-hidden bg-yellow-300 rounded-lg">
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
@@ -44,11 +42,7 @@ const CompanyValues = () => {
               
               <div className="w-16 h-1 bg-white mx-auto mb-6 rounded-full"></div>
               
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="bg-white text-orange-500 border-white hover:bg-orange-50 font-nunito font-semibold"
-              >
+              <Button variant="outline" size="lg" className="bg-white text-orange-500 border-white hover:bg-orange-50 font-nunito font-semibold">
                 JETZT BEWERBEN
                 <ArrowRight className="h-5 w-5 ml-2" />
               </Button>
@@ -56,8 +50,6 @@ const CompanyValues = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CompanyValues;

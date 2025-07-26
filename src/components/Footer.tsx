@@ -1,59 +1,21 @@
 import { Button } from "./ui/button";
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock,
-  Facebook,
-  Instagram,
-  Linkedin,
-  ArrowRight
-} from "lucide-react";
-
+import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin, ArrowRight } from "lucide-react";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
-  const serviceCategories = [
-    {
-      title: "Pflegeleistungen",
-      links: [
-        "Grundpflege",
-        "Behandlungspflege", 
-        "Hauswirtschaft",
-        "Betreuungsleistungen",
-        "Verhinderungspflege",
-        "24-Stunden-Pflege"
-      ]
-    },
-    {
-      title: "Kostenübernahme",
-      links: [
-        "Pflegegrade", 
-        "Pflegekasse",
-        "Krankenkasse",
-        "Selbstzahler",
-        "Beihilfe",
-        "Sozialamt"
-      ]
-    },
-    {
-      title: "Über uns",
-      links: [
-        "Unser Team",
-        "Qualitätsstandards",
-        "Karriere",
-        "Fortbildungen",
-        "Zertifizierungen",
-        "Referenzen"
-      ]
-    }
-  ];
-
-  return (
-    <footer className="bg-nature-charcoal text-white">
+  const serviceCategories = [{
+    title: "Pflegeleistungen",
+    links: ["Grundpflege", "Behandlungspflege", "Hauswirtschaft", "Betreuungsleistungen", "Verhinderungspflege", "24-Stunden-Pflege"]
+  }, {
+    title: "Kostenübernahme",
+    links: ["Pflegegrade", "Pflegekasse", "Krankenkasse", "Selbstzahler", "Beihilfe", "Sozialamt"]
+  }, {
+    title: "Über uns",
+    links: ["Unser Team", "Qualitätsstandards", "Karriere", "Fortbildungen", "Zertifizierungen", "Referenzen"]
+  }];
+  return <footer className="bg-nature-charcoal text-white">
       {/* Beautiful Image Gallery Section */}
-      <div className="border-b border-white/10 bg-gradient-to-r from-nature-sage/30 via-nature-cream/20 to-nature-sage/40">
-        <div className="container mx-auto px-4 py-16">
+      <div className="border-b border-white/10 bg-gradient-to-r from-nature-sage/30 via-nature-cream/20 to-nature-sage/40 bg-green-100">
+        <div className="container mx-auto px-4 py-16 bg-transparent">
           <div className="text-center mb-12">
             <h3 className="text-3xl md:text-4xl font-bold mb-4 font-nunito text-nature-charcoal">
               Pflege mit Herz und Professionalität
@@ -66,11 +28,7 @@ const Footer = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
             <div className="group relative overflow-hidden rounded-2xl aspect-square bg-white/20 backdrop-blur-sm border border-white/30">
-              <img 
-                src="/src/assets/care-assistance.jpg" 
-                alt="Pflegeberatung"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
+              <img src="/src/assets/care-assistance.jpg" alt="Pflegeberatung" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-nature-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-4 left-4 text-white">
                   <h4 className="font-semibold font-nunito">Beratung</h4>
@@ -80,11 +38,7 @@ const Footer = () => {
             </div>
             
             <div className="group relative overflow-hidden rounded-2xl aspect-square bg-white/20 backdrop-blur-sm border border-white/30">
-              <img 
-                src="/src/assets/companion-care.jpg" 
-                alt="Betreuung"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
+              <img src="/src/assets/companion-care.jpg" alt="Betreuung" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-nature-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-4 left-4 text-white">
                   <h4 className="font-semibold font-nunito">Betreuung</h4>
@@ -94,11 +48,7 @@ const Footer = () => {
             </div>
             
             <div className="group relative overflow-hidden rounded-2xl aspect-square bg-white/20 backdrop-blur-sm border border-white/30">
-              <img 
-                src="/src/assets/household-help.jpg" 
-                alt="Hauswirtschaft"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
+              <img src="/src/assets/household-help.jpg" alt="Hauswirtschaft" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-nature-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-4 left-4 text-white">
                   <h4 className="font-semibold font-nunito">Hauswirtschaft</h4>
@@ -108,11 +58,7 @@ const Footer = () => {
             </div>
             
             <div className="group relative overflow-hidden rounded-2xl aspect-square bg-white/20 backdrop-blur-sm border border-white/30">
-              <img 
-                src="/src/assets/hero-care.jpg" 
-                alt="24h Pflege"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
+              <img src="/src/assets/hero-care.jpg" alt="24h Pflege" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-nature-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-4 left-4 text-white">
                   <h4 className="font-semibold font-nunito">24h Betreuung</h4>
@@ -137,11 +83,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white/10 p-1">
-                <img 
-                  src="/lovable-uploads/7e9df2db-9333-4d29-85cc-b32f727b93cc.png" 
-                  alt="Natura Pflegedienst Logo"
-                  className="w-full h-full object-contain"
-                />
+                <img src="/lovable-uploads/7e9df2db-9333-4d29-85cc-b32f727b93cc.png" alt="Natura Pflegedienst Logo" className="w-full h-full object-contain" />
               </div>
               <div className="flex flex-col">
                 <h1 className="text-xl font-bold text-white font-nunito">
@@ -210,25 +152,18 @@ const Footer = () => {
           </div>
 
           {/* Service Categories */}
-          {serviceCategories.map((category, index) => (
-            <div key={index}>
+          {serviceCategories.map((category, index) => <div key={index}>
               <h4 className="text-lg font-semibold mb-6 font-nunito">
                 {category.title}
               </h4>
               <ul className="space-y-3">
-                {category.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <a 
-                      href="#" 
-                      className="text-white/80 hover:text-white transition-colors font-source text-sm"
-                    >
+                {category.links.map((link, linkIndex) => <li key={linkIndex}>
+                    <a href="#" className="text-white/80 hover:text-white transition-colors font-source text-sm">
                       {link}
                     </a>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
-            </div>
-          ))}
+            </div>)}
         </div>
       </div>
 
@@ -264,8 +199,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
