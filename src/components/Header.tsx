@@ -60,8 +60,8 @@ const Header = () => {
               <Phone className="h-4 w-4" />
               <span className="font-source">0911-123456</span>
             </div>
-            <Button variant="coral" size="lg" className="font-nunito">
-              Kostenlose Beratung
+            <Button variant="coral" size="lg" className="font-nunito" asChild>
+              <Link to="/digital-beratung">Termin buchen</Link>
             </Button>
           </div>
 
