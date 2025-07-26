@@ -1,438 +1,251 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Calendar } from "@/components/ui/calendar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CalendarDays, Clock, User, Phone, Mail, CheckCircle, Printer } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { format, addDays, isWeekend, isBefore, startOfToday } from "date-fns";
-import { de } from "date-fns/locale";
+'use client';
 
-const formSchema = z.object({
-  name: z.string().min(1, "Name ist erforderlich"),
-  email: z.string().email("Ungültige E-Mail-Adresse"),
-  phone: z.string().min(1, "Telefonnummer ist erforderlich"),
-  careLevel: z.string().min(1, "Pflegegrad ist erforderlich"),
-  consultationType: z.enum(["video", "phone", "inperson"]).refine((val) => val, {
-    message: "Beratungsart ist erforderlich",
-  }),
-  privacy: z.boolean().refine((val) => val, "Datenschutz muss akzeptiert werden"),
-  terms: z.boolean().refine((val) => val, "AGB müssen akzeptiert werden"),
-});
+import { useState } from 'react';
+import { CalendarCheck, Clock, User, Phone, Video, CheckCircle, Calendar, Globe, MapPin } from 'lucide-react';
+import { KalenderAuswahl } from '@/components/booking/kalender-auswahl';
+import { KontaktdatenForm } from '@/components/booking/kontaktdaten-form';
+import { TerminBestaetigung } from '@/components/booking/termin-bestaetigung';
 
-type FormData = z.infer<typeof formSchema>;
+type BookingStep = 'calendar' | 'contact' | 'confirmation';
 
-const timeSlots = [
-  "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
-  "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
-  "14:00", "14:30", "15:00", "15:30", "16:00"
-];
+interface BookingData {
+  selectedDate?: Date;
+  selectedTime?: string;
+  contactData?: any;
+  bookingId?: string;
+}
 
-const DigitalBooking = () => {
-  const [step, setStep] = useState(1);
-  const [selectedDate, setSelectedDate] = useState<Date>();
-  const [selectedTime, setSelectedTime] = useState<string>();
-  const [bookingData, setBookingData] = useState<FormData & { selectedDate?: Date; selectedTime?: string }>();
-  const [bookingId] = useState(`NP-${Date.now().toString().slice(-6)}`);
+export default function DigitalBooking() {
+  const [currentStep, setCurrentStep] = useState<BookingStep>('calendar');
+  const [bookingData, setBookingData] = useState<BookingData>({});
 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      privacy: false,
-      terms: false,
-    },
-  });
-
-  const isDateAvailable = (date: Date) => {
-    const today = startOfToday();
-    return !isBefore(date, today) && !isWeekend(date);
+  const handleDateTimeSelect = (date: Date, time: string) => {
+    setBookingData(prev => ({
+      ...prev,
+      selectedDate: date,
+      selectedTime: time
+    }));
+    setCurrentStep('contact');
   };
 
-  const handleDateSelect = (date: Date | undefined) => {
-    setSelectedDate(date);
+  const handleContactSubmit = (contactData: any, bookingId: string) => {
+    setBookingData(prev => ({
+      ...prev,
+      contactData,
+      bookingId
+    }));
+    setCurrentStep('confirmation');
   };
 
-  const handleTimeSelect = (time: string) => {
-    setSelectedTime(time);
+  const formatDate = (date?: Date) => {
+    if (!date) return '';
+    return date.toLocaleDateString('de-DE', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
 
-  const onSubmit = (data: FormData) => {
-    const finalData = { ...data, selectedDate, selectedTime };
-    setBookingData(finalData);
-    setStep(3);
+  const beraterInfo = {
+    name: 'Sarah Schmidt',
+    titel: 'Qualifizierte Pflegeberaterin',
+    avatar: '/berater-avatar.jpg'
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
+  const steps = [
+    { id: 'calendar', label: 'Termin wählen', icon: Calendar },
+    { id: 'contact', label: 'Kontaktdaten', icon: User },
+    { id: 'confirmation', label: 'Bestätigung', icon: CheckCircle }
+  ];
 
-  if (step === 1) {
-    return (
-      <div className="min-h-screen">
-        <Header />
-        
-        <section className="py-20">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-nature-charcoal mb-6 font-nunito">
-                Digitale <span className="text-nature-sage">Beratung</span> buchen
-              </h1>
-              <p className="text-xl text-muted-foreground font-source">
-                Schritt 1 von 3: Wählen Sie Ihren Wunschtermin
-              </p>
-            </div>
-
-            <Card className="shadow-soft">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 font-nunito">
-                  <CalendarDays className="h-5 w-5 text-nature-sage" />
-                  Terminkalender
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-4 font-nunito">Verfügbare Termine</h3>
-                    <Calendar
-                      mode="single"
-                      selected={selectedDate}
-                      onSelect={handleDateSelect}
-                      disabled={(date) => !isDateAvailable(date)}
-                      locale={de}
-                      className="rounded-md border"
-                    />
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-lg font-semibold mb-4 font-nunito">Verfügbare Uhrzeiten</h3>
-                    {selectedDate ? (
-                      <div className="grid grid-cols-3 gap-2">
-                        {timeSlots.map((time) => (
-                          <Button
-                            key={time}
-                            variant={selectedTime === time ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => handleTimeSelect(time)}
-                            className="font-source"
-                          >
-                            {time}
-                          </Button>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-muted-foreground font-source">
-                        Bitte wählen Sie zuerst ein Datum aus.
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex justify-between pt-6 border-t">
-                  <div></div>
-                  <Button
-                    onClick={() => setStep(2)}
-                    disabled={!selectedDate || !selectedTime}
-                    className="font-nunito"
-                  >
-                    Weiter zu Schritt 2
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        <Footer />
-      </div>
-    );
-  }
-
-  if (step === 2) {
-    return (
-      <div className="min-h-screen">
-        <Header />
-        
-        <section className="py-20">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-nature-charcoal mb-6 font-nunito">
-                Digitale <span className="text-nature-sage">Beratung</span> buchen
-              </h1>
-              <p className="text-xl text-muted-foreground font-source">
-                Schritt 2 von 3: Ihre Kontaktdaten
-              </p>
-            </div>
-
-            <Card className="shadow-soft">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 font-nunito">
-                  <User className="h-5 w-5 text-nature-sage" />
-                  Kontaktformular
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="font-nunito">Name *</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Ihr vollständiger Name" {...field} className="font-source" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="font-nunito">E-Mail *</FormLabel>
-                            <FormControl>
-                              <Input type="email" placeholder="ihre@email.de" {...field} className="font-source" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="font-nunito">Telefon *</FormLabel>
-                            <FormControl>
-                              <Input placeholder="0911-123456" {...field} className="font-source" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="careLevel"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="font-nunito">Pflegegrad *</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger className="font-source">
-                                  <SelectValue placeholder="Wählen Sie Ihren Pflegegrad" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="1">Pflegegrad 1</SelectItem>
-                                <SelectItem value="2">Pflegegrad 2</SelectItem>
-                                <SelectItem value="3">Pflegegrad 3</SelectItem>
-                                <SelectItem value="4">Pflegegrad 4</SelectItem>
-                                <SelectItem value="5">Pflegegrad 5</SelectItem>
-                                <SelectItem value="not-applied">Noch nicht beantragt</SelectItem>
-                                <SelectItem value="rejected">Abgelehnt</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <FormField
-                      control={form.control}
-                      name="consultationType"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="font-nunito">Art der Beratung *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="font-source">
-                                <SelectValue placeholder="Wählen Sie die Beratungsart" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="video">Videoberatung</SelectItem>
-                              <SelectItem value="phone">Telefonberatung</SelectItem>
-                              <SelectItem value="inperson">Persönliche Beratung vor Ort</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <div className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="privacy"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                              />
-                            </FormControl>
-                            <div className="space-y-1 leading-none">
-                              <FormLabel className="font-source">
-                                Ich habe die Datenschutzerklärung gelesen und akzeptiere sie. *
-                              </FormLabel>
-                            </div>
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="terms"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                              />
-                            </FormControl>
-                            <div className="space-y-1 leading-none">
-                              <FormLabel className="font-source">
-                                Ich akzeptiere die Allgemeinen Geschäftsbedingungen. *
-                              </FormLabel>
-                            </div>
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <div className="flex justify-between pt-6 border-t">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setStep(1)}
-                        className="font-nunito"
-                      >
-                        Zurück
-                      </Button>
-                      <Button type="submit" className="font-nunito">
-                        Termin bestätigen
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        <Footer />
-      </div>
-    );
-  }
-
-  // Step 3 - Confirmation
   return (
-    <div className="min-h-screen">
-      <Header />
-      
-      <section className="py-20">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-12">
-            <CheckCircle className="h-16 w-16 text-nature-sage mx-auto mb-4" />
-            <h1 className="text-4xl md:text-5xl font-bold text-nature-charcoal mb-6 font-nunito">
-              Buchung <span className="text-nature-sage">bestätigt</span>
-            </h1>
-            <p className="text-xl text-muted-foreground font-source">
-              Ihre Beratung wurde erfolgreich gebucht
-            </p>
+    <div className="min-h-screen bg-nature-sage/10">
+      {/* Modern Header */}
+      <div className="bg-white shadow-sm border-b" style={{ marginTop: '80px' }}>
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-nature-sage to-nature-coral flex items-center justify-center shadow-lg">
+                <CalendarCheck className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-left">
+                <h1 className="text-3xl font-bold text-foreground">
+                  Pflegeberatung nach § 37.3
+                </h1>
+                <p className="text-muted-foreground text-lg">
+                  Qualifizierte Pflegeberatung - Kostenlos für Versicherte
+                </p>
+              </div>
+            </div>
+            
+            {/* Progress Steps */}
+            <div className="flex justify-center mt-8">
+              <div className="flex items-center space-x-4">
+                {steps.map((step, index) => {
+                  const Icon = step.icon;
+                  const isActive = step.id === currentStep;
+                  const isCompleted = 
+                    (step.id === 'calendar' && (currentStep === 'contact' || currentStep === 'confirmation')) ||
+                    (step.id === 'contact' && currentStep === 'confirmation');
+                  
+                  return (
+                    <div key={step.id} className="flex items-center">
+                      <div className={`flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300 ${
+                        isActive 
+                          ? 'bg-nature-sage/20 text-nature-sage shadow-md' 
+                          : isCompleted
+                          ? 'bg-nature-sage/10 text-nature-sage'
+                          : 'bg-muted text-muted-foreground'
+                      }`}>
+                        <Icon className="w-5 h-5" />
+                        <span className="font-medium">{step.label}</span>
+                      </div>
+                      {index < steps.length - 1 && (
+                        <div className={`w-8 h-0.5 mx-2 ${
+                          isCompleted ? 'bg-nature-sage' : 'bg-border'
+                        }`} />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Service Info Card */}
+          <div className="lg:col-span-1">
+            <div className="bg-card rounded-2xl shadow-lg border overflow-hidden sticky top-24">
+              {/* Company Branding */}
+              <div className="p-6 text-white bg-gradient-to-br from-nature-sage to-nature-coral">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                    <User className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold">
+                      Natura Pflegedienst GmbH
+                    </h2>
+                    <p className="text-white/80">
+                      Pflegeberatung nach § 37.3
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Service Details */}
+              <div className="p-6 space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-4">
+                    Was Sie erwartet:
+                  </h3>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Clock className="w-5 h-5 flex-shrink-0 text-nature-sage" />
+                      <span>Dauer: 30-45 Minuten</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <CheckCircle className="w-5 h-5 flex-shrink-0 text-nature-sage" />
+                      <span>Kostenlos für Versicherte</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Video className="w-5 h-5 flex-shrink-0 text-nature-sage" />
+                      <span>Video, Telefon oder Vor-Ort</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <User className="w-5 h-5 flex-shrink-0 text-nature-sage" />
+                      <span>Qualifizierte Pflegeberater</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Selected Details */}
+                {(bookingData.selectedDate && bookingData.selectedTime) && (
+                  <div className="border-t pt-6">
+                    <h4 className="font-semibold text-foreground mb-4">Ihr Termin:</h4>
+                    <div className="rounded-xl bg-nature-sage/10 p-4 space-y-3">
+                      <div className="flex items-center gap-3 text-foreground">
+                        <Calendar className="w-4 h-4 text-nature-sage" />
+                        <span className="font-medium">{formatDate(bookingData.selectedDate)}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-foreground">
+                        <Clock className="w-4 h-4 text-nature-sage" />
+                        <span>{bookingData.selectedTime} Uhr</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-foreground">
+                        <Globe className="w-4 h-4 text-nature-sage" />
+                        <span>Mitteleuropäische Zeit (MEZ)</span>
+                      </div>
+                      {bookingData.contactData?.kommunikations_praeferenz && (
+                        <div className="flex items-center gap-3 text-foreground">
+                          {bookingData.contactData.kommunikations_praeferenz === 'video' ? (
+                            <Video className="w-4 h-4 text-nature-sage" />
+                          ) : bookingData.contactData.kommunikations_praeferenz === 'telefon' ? (
+                            <Phone className="w-4 h-4 text-nature-sage" />
+                          ) : (
+                            <MapPin className="w-4 h-4 text-nature-sage" />
+                          )}
+                          <span>
+                            {bookingData.contactData.kommunikations_praeferenz === 'video' 
+                              ? 'Video-Beratung' 
+                              : bookingData.contactData.kommunikations_praeferenz === 'telefon'
+                              ? 'Telefon-Beratung'
+                              : 'Vor-Ort-Beratung'
+                            }
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Legal Notice */}
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                  <h4 className="font-semibold text-amber-800 mb-2">
+                    § 37.3 SGB XI Beratung
+                  </h4>
+                  <p className="text-sm text-amber-700 leading-relaxed">
+                    Die Kosten werden vollständig von der Pflegekasse übernommen. 
+                    Sie zahlen nichts für diese Beratung.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <Card className="shadow-soft mb-8">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-nunito">
-                <CheckCircle className="h-5 w-5 text-nature-sage" />
-                Buchungsbestätigung #{bookingId}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="font-semibold mb-2 font-nunito">Termininformationen</h3>
-                  <div className="space-y-2 font-source">
-                    <p><strong>Datum:</strong> {selectedDate && format(selectedDate, "dd.MM.yyyy", { locale: de })}</p>
-                    <p><strong>Uhrzeit:</strong> {selectedTime}</p>
-                    <p><strong>Art:</strong> {
-                      bookingData?.consultationType === "video" ? "Videoberatung" :
-                      bookingData?.consultationType === "phone" ? "Telefonberatung" :
-                      "Persönliche Beratung vor Ort"
-                    }</p>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-2 font-nunito">Kontaktdaten</h3>
-                  <div className="space-y-2 font-source">
-                    <p><strong>Name:</strong> {bookingData?.name}</p>
-                    <p><strong>E-Mail:</strong> {bookingData?.email}</p>
-                    <p><strong>Telefon:</strong> {bookingData?.phone}</p>
-                    <p><strong>Pflegegrad:</strong> {bookingData?.careLevel}</p>
-                  </div>
-                </div>
+          {/* Main Content Area */}
+          <div className="lg:col-span-2">
+            <div className="bg-card rounded-2xl shadow-lg border overflow-hidden">
+              <div className="p-8">
+                {currentStep === 'calendar' && (
+                  <KalenderAuswahl onDateTimeSelect={handleDateTimeSelect} />
+                )}
+                
+                {currentStep === 'contact' && (
+                  <KontaktdatenForm 
+                    onFormSubmit={handleContactSubmit}
+                    bookingData={bookingData}
+                  />
+                )}
+                
+                {currentStep === 'confirmation' && (
+                  <TerminBestaetigung 
+                    bookingData={bookingData}
+                    beraterInfo={beraterInfo}
+                  />
+                )}
               </div>
-
-              <div className="border-t pt-6">
-                <h3 className="font-semibold mb-4 font-nunito">Vorbereitung auf Ihr Beratungsgespräch</h3>
-                <ul className="space-y-2 font-source text-muted-foreground">
-                  <li>• Halten Sie relevante Unterlagen bereit (Pflegegutachten, Arztberichte)</li>
-                  <li>• Notieren Sie sich Fragen zum Pflegedienst und unseren Leistungen</li>
-                  <li>• Bei Videoberatung: Testen Sie vorab Ihre Internetverbindung</li>
-                  <li>• Planen Sie ca. 30-45 Minuten für das Gespräch ein</li>
-                </ul>
-              </div>
-
-              <div className="border-t pt-6">
-                <h3 className="font-semibold mb-2 font-nunito">Kontakt</h3>
-                <div className="flex flex-col sm:flex-row gap-4 font-source">
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-nature-sage" />
-                    <span>0911-123456</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-nature-sage" />
-                    <span>info@natura-pflegedienst.de</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-4 pt-6 border-t">
-                <Button onClick={handlePrint} variant="outline" className="font-nunito">
-                  <Printer className="h-4 w-4 mr-2" />
-                  Drucken
-                </Button>
-                <Button onClick={() => window.location.href = "/"} className="font-nunito">
-                  Zur Startseite
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </section>
-
-      <Footer />
+      </div>
     </div>
   );
-};
-
-export default DigitalBooking;
+}
