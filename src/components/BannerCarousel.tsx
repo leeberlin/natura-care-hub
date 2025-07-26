@@ -39,12 +39,12 @@ const BannerCarousel = () => {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="relative w-full h-64 md:h-80 overflow-hidden">
+    <section className="relative w-full h-screen overflow-hidden">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {bannerImages.map((banner) => (
             <div key={banner.id} className="flex-[0_0_100%] min-w-0">
-              <div className="relative h-64 md:h-80">
+              <div className="relative h-screen">
                 <img
                   src={banner.src}
                   alt={banner.alt}
@@ -54,7 +54,24 @@ const BannerCarousel = () => {
                     e.currentTarget.style.display = 'none';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-hero opacity-20"></div>
+                <div className="absolute inset-0 bg-gradient-hero opacity-30"></div>
+                
+                {/* Logo overlay with animation */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center animate-fade-in">
+                    <div className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl animate-scale-in">
+                      <div className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
+                        🌿
+                      </div>
+                    </div>
+                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-2xl mb-4 animate-fade-in delay-500 font-nunito">
+                      Natura <span className="text-nature-sage-light">Pflege</span>
+                    </h1>
+                    <p className="text-lg md:text-xl text-white/90 drop-shadow-lg animate-fade-in delay-700 font-source max-w-2xl mx-auto px-4">
+                      Liebevolle Pflege mit natürlicher Fürsorge - seit über 15 Jahren Ihr vertrauensvoller Partner
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -62,15 +79,15 @@ const BannerCarousel = () => {
       </div>
 
       {/* Dot indicators */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
         {bannerImages.map((_, index) => (
           <button
             key={index}
             className={cn(
-              "w-3 h-3 rounded-full transition-all duration-300",
+              "w-4 h-4 rounded-full transition-all duration-300 backdrop-blur-sm",
               index === selectedIndex
-                ? "bg-nature-coral scale-110"
-                : "bg-white/60 hover:bg-white/80"
+                ? "bg-nature-coral scale-125 shadow-lg"
+                : "bg-white/60 hover:bg-white/80 hover:scale-110"
             )}
             onClick={() => scrollTo(index)}
             aria-label={`Go to slide ${index + 1}`}
