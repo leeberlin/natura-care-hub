@@ -52,6 +52,14 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				nature: {
+					sage: 'hsl(var(--nature-sage))',
+					teal: 'hsl(var(--nature-teal))',
+					cream: 'hsl(var(--nature-cream))',
+					beige: 'hsl(var(--nature-beige))',
+					coral: 'hsl(var(--nature-coral))',
+					charcoal: 'hsl(var(--nature-charcoal))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +70,18 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			fontFamily: {
+				'nunito': ['Nunito Sans', 'sans-serif'],
+				'source': ['Source Sans Pro', 'sans-serif'],
+			},
+			backgroundImage: {
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-soft': 'var(--gradient-soft)',
+			},
+			boxShadow: {
+				'soft': 'var(--shadow-soft)',
+				'card': 'var(--shadow-card)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

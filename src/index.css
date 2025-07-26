@@ -9,32 +9,45 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 150 25% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 150 25% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 150 25% 18%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 150 15% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 35 25% 96%;
+    --secondary-foreground: 150 25% 18%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 35 25% 94%;
+    --muted-foreground: 150 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 25 65% 70%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 35 20% 90%;
+    --input: 35 20% 90%;
+    --ring: 150 15% 55%;
+
+    --nature-sage: 150 15% 55%;
+    --nature-teal: 180 25% 60%;
+    --nature-cream: 35 25% 96%;
+    --nature-beige: 35 20% 92%;
+    --nature-coral: 25 65% 70%;
+    --nature-charcoal: 150 25% 18%;
+    
+    --gradient-hero: linear-gradient(135deg, hsl(var(--nature-sage)) 0%, hsl(var(--nature-teal)) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(var(--nature-cream)) 0%, hsl(var(--background)) 100%);
+    
+    --shadow-soft: 0 10px 25px -5px hsl(var(--nature-sage) / 0.1);
+    --shadow-card: 0 4px 12px -2px hsl(var(--nature-sage) / 0.08);
 
     --radius: 0.5rem;
 
