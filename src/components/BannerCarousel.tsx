@@ -2,14 +2,19 @@ import { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { cn } from '@/lib/utils';
+import banner1 from '@/assets/banner1.png';
+import banner2 from '@/assets/banner2.png';
+import banner3 from '@/assets/banner3.png';
+import banner4 from '@/assets/banner4.png';
+import banner5 from '@/assets/banner5.png';
 
 const BannerCarousel = () => {
   const bannerImages = [
-    { id: 1, src: '/banner1.png', alt: 'Natura Pflegedienst Banner 1' },
-    { id: 2, src: '/banner2.png', alt: 'Natura Pflegedienst Banner 2' },
-    { id: 3, src: '/banner3.png', alt: 'Natura Pflegedienst Banner 3' },
-    { id: 4, src: '/banner4.png', alt: 'Natura Pflegedienst Banner 4' },
-    { id: 5, src: '/image.png', alt: 'Natura Pflegedienst Banner 5' },
+    { id: 1, src: banner1, alt: 'Natura Pflegedienst Banner 1' },
+    { id: 2, src: banner2, alt: 'Natura Pflegedienst Banner 2' },
+    { id: 3, src: banner3, alt: 'Natura Pflegedienst Banner 3' },
+    { id: 4, src: banner4, alt: 'Natura Pflegedienst Banner 4' },
+    { id: 5, src: banner5, alt: 'Natura Pflegedienst Banner 5' },
   ];
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -18,6 +23,8 @@ const BannerCarousel = () => {
   );
   
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
+  const [isLogoVisible, setIsLogoVisible] = useState(false);
 
   const scrollTo = useCallback(
     (index: number) => emblaApi && emblaApi.scrollTo(index),
@@ -38,6 +45,20 @@ const BannerCarousel = () => {
     };
   }, [emblaApi, onSelect]);
 
+  // Scroll detection for logo animation
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      
+      // Show logo when user scrolls down (after 100px)
+      setIsLogoVisible(currentScrollY > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section className="relative w-full h-screen overflow-hidden">
       <div className="overflow-hidden" ref={emblaRef}>
@@ -54,24 +75,7 @@ const BannerCarousel = () => {
                     e.currentTarget.style.display = 'none';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-hero opacity-30"></div>
-                
-                {/* Logo overlay with animation */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center animate-fade-in">
-                    <div className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl animate-scale-in">
-                      <div className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
-                        🌿
-                      </div>
-                    </div>
-                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-2xl mb-4 animate-fade-in delay-500 font-nunito">
-                      Natura <span className="text-nature-sage-light">Pflege</span>
-                    </h1>
-                    <p className="text-lg md:text-xl text-white/90 drop-shadow-lg animate-fade-in delay-700 font-source max-w-2xl mx-auto px-4">
-                      Liebevolle Pflege mit natürlicher Fürsorge - seit über 15 Jahren Ihr vertrauensvoller Partner
-                    </p>
-                  </div>
-                </div>
+                <div className="absolute inset-0 bg-gradient-hero opacity-20"></div>
               </div>
             </div>
           ))}
@@ -93,6 +97,29 @@ const BannerCarousel = () => {
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
+      </div>
+
+      {/* Scroll-triggered Logo Overlay */}
+      <div className={cn(
+        "absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-700 ease-out z-20",
+        isLogoVisible 
+          ? "opacity-100 transform scale-100" 
+          : "opacity-0 transform scale-75"
+      )}>
+        <div className="relative">
+          {/* Logo Background */}
+          <div className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full bg-white/95 backdrop-blur-md shadow-2xl flex items-center justify-center transform transition-all duration-500 hover:scale-110">
+            <img 
+              src="/lovable-uploads/7e9df2db-9333-4d29-85cc-b32f727b93cc.png" 
+              alt="Natura Pflegedienst Logo"
+              className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain"
+            />
+          </div>
+          
+          {/* Pulsing Ring Animation */}
+          <div className="absolute inset-0 rounded-full border-4 border-nature-sage animate-ping opacity-30"></div>
+          <div className="absolute inset-2 rounded-full border-2 border-nature-coral animate-pulse opacity-50"></div>
+        </div>
       </div>
     </section>
   );
