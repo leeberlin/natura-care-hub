@@ -10,6 +10,7 @@ import Team from "./pages/Team";
 import Blog from "./pages/Blog";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
+import Pflegeberatung from "./pages/Pflegeberatung";
 import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import AGB from "./pages/AGB";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/pflegeberatung" element={<Pflegeberatung />} />
           <Route path="/digital-beratung" element={<DigitalBooking />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/impressum" element={<Impressum />} />

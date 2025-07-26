@@ -40,6 +40,9 @@ const Header = () => {
             <Link to="/services" className="text-foreground hover:text-primary transition-colors font-source">
               Leistungen
             </Link>
+            <Link to="/pflegeberatung" className="text-foreground hover:text-primary transition-colors font-source">
+              Pflegeberatung
+            </Link>
             <Link to="/team" className="text-foreground hover:text-primary transition-colors font-source">
               Team
             </Link>
@@ -87,6 +90,9 @@ const Header = () => {
               </Link>
               <Link to="/services" className="text-foreground hover:text-primary transition-colors font-source py-2">
                 Leistungen
+              </Link>
+              <Link to="/pflegeberatung" className="text-foreground hover:text-primary transition-colors font-source py-2">
+                Pflegeberatung
               </Link>
               <Link to="/team" className="text-foreground hover:text-primary transition-colors font-source py-2">
                 Team
