@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { MessageCircle, X, Send, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MessageList from './MessageList';
 import QuickReplies from './QuickReplies';
 import { detectLanguage, getContactInfo, getWelcomeMessage, getServiceOptions } from '../utils/languageUtils';
+import { SmartChatLogic, KnowledgeMatch } from './KnowledgeBase';
 
 export interface Message {
   id: string;
@@ -12,6 +13,14 @@ export interface Message {
   sender: 'user' | 'bot';
   timestamp: Date;
   language?: string;
+  source?: 'knowledge_base' | 'api' | 'fallback';
+  suggestions?: string[];
+}
+
+interface ChatStats {
+  knowledgeResponses: number;
+  apiCalls: number;
+  costSaved: number;
 }
 
 const ChatWidget = () => {
@@ -20,6 +29,7 @@ const ChatWidget = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [detectedLanguage, setDetectedLanguage] = useState<string>('de');
   const [isTyping, setIsTyping] = useState(false);
+  const [stats, setStats] = useState<ChatStats>({ knowledgeResponses: 0, apiCalls: 0, costSaved: 0 });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -30,13 +40,15 @@ const ChatWidget = () => {
     scrollToBottom();
   }, [messages]);
 
-  const addMessage = (text: string, sender: 'user' | 'bot', language?: string) => {
+  const addMessage = (text: string, sender: 'user' | 'bot', language?: string, source?: string, suggestions?: string[]) => {
     const newMessage: Message = {
       id: Date.now().toString(),
       text,
       sender,
       timestamp: new Date(),
-      language
+      language,
+      source: source as any,
+      suggestions
     };
     setMessages(prev => [...prev, newMessage]);
   };
@@ -55,7 +67,7 @@ const ChatWidget = () => {
     }, 1000);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
     if (messages.length === 0) {
@@ -63,11 +75,32 @@ const ChatWidget = () => {
     } else {
       addMessage(inputMessage, 'user');
       
-      // Simple bot response for demo
+      // Smart Knowledge Base First approach
       setIsTyping(true);
       setTimeout(() => {
         setIsTyping(false);
-        addMessage(getContactInfo(detectedLanguage), 'bot', detectedLanguage);
+        
+        // Check Knowledge Base first (FREE)
+        const knowledgeMatch = SmartChatLogic.checkKnowledgeBase(inputMessage);
+        
+        if (knowledgeMatch && knowledgeMatch.confidence > 0.5) {
+          // Use Knowledge Base response
+          addMessage(knowledgeMatch.response, 'bot', detectedLanguage, knowledgeMatch.source, knowledgeMatch.suggestions);
+          setStats(prev => ({ 
+            ...prev, 
+            knowledgeResponses: prev.knowledgeResponses + 1,
+            costSaved: prev.costSaved + 0.02 // Estimated API cost per message
+          }));
+        } else if (SmartChatLogic.shouldUseAPI(inputMessage, knowledgeMatch)) {
+          // Use API for complex queries (costs money - demo fallback for now)
+          const fallback = SmartChatLogic.getFallbackResponse();
+          addMessage(fallback.response, 'bot', detectedLanguage, fallback.source, fallback.suggestions);
+          setStats(prev => ({ ...prev, apiCalls: prev.apiCalls + 1 }));
+        } else {
+          // Fallback response
+          const fallback = SmartChatLogic.getFallbackResponse();
+          addMessage(fallback.response, 'bot', detectedLanguage, fallback.source, fallback.suggestions);
+        }
       }, 1000);
     }
     
@@ -80,8 +113,20 @@ const ChatWidget = () => {
     setIsTyping(true);
     setTimeout(() => {
       setIsTyping(false);
-      addMessage(getContactInfo(detectedLanguage), 'bot', detectedLanguage);
-    }, 1000);
+      
+      // Use Knowledge Base for quick replies
+      const knowledgeMatch = SmartChatLogic.checkKnowledgeBase(service);
+      if (knowledgeMatch) {
+        addMessage(knowledgeMatch.response, 'bot', detectedLanguage, knowledgeMatch.source, knowledgeMatch.suggestions);
+        setStats(prev => ({ 
+          ...prev, 
+          knowledgeResponses: prev.knowledgeResponses + 1,
+          costSaved: prev.costSaved + 0.02
+        }));
+      } else {
+        addMessage(getContactInfo(detectedLanguage), 'bot', detectedLanguage);
+      }
+    }, 500);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -111,11 +156,11 @@ const ChatWidget = () => {
         <div className="bg-[#4A90E2] text-white p-4 rounded-t-lg flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <MessageCircle className="w-5 h-5 text-[#4A90E2]" />
+              <Brain className="w-5 h-5 text-[#4A90E2]" />
             </div>
             <div>
               <h3 className="font-semibold text-sm">Natura Pflegedienst</h3>
-              <p className="text-xs opacity-90">Online</p>
+              <p className="text-xs opacity-90">Smart AI Assistant</p>
             </div>
           </div>
           <Button
@@ -127,6 +172,16 @@ const ChatWidget = () => {
             <X className="w-5 h-5" />
           </Button>
         </div>
+
+        {/* Cost Optimization Stats */}
+        {(stats.knowledgeResponses > 0 || stats.apiCalls > 0) && (
+          <div className="bg-green-50 border-b border-green-200 p-2 text-xs">
+            <div className="flex items-center justify-between text-green-700">
+              <span>💡 Smart: {stats.knowledgeResponses} KB Antworten</span>
+              <span>💰 Gespart: ~{stats.costSaved.toFixed(2)}€</span>
+            </div>
+          </div>
+        )}
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -142,8 +197,9 @@ const ChatWidget = () => {
           
           {messages.length > 0 && messages[messages.length - 1].sender === 'bot' && (
             <QuickReplies
-              options={getServiceOptions(detectedLanguage)}
+              options={messages[messages.length - 1].suggestions || getServiceOptions(detectedLanguage)}
               onSelect={handleQuickReply}
+              isKnowledgeBased={messages[messages.length - 1].source === 'knowledge_base'}
             />
           )}
           

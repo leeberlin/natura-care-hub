@@ -75,7 +75,40 @@ Wir stehen Ihnen gerne zur Verfügung!`;
 };
 
 export const getContactInfo = (language: string): string => {
-  return getWelcomeMessage(language);
+  switch (language) {
+    case 'vi':
+      return `📞 **Liên hệ Natura Pflegedienst:**
+
+**Anh Tuấn Phạm:** 017645858098
+**Văn phòng:** 0911/123456 
+**Email:** info@naturapflegedienst.de
+**Giờ làm việc:** Thứ 2-5 (8:00-15:00), Thứ 6 (9:00-14:00)
+**Cấp cứu 24/7:** 017645858098
+
+Chúng tôi luôn sẵn sàng hỗ trợ bạn!`;
+
+    case 'en':
+      return `📞 **Contact Natura Pflegedienst:**
+
+**Mr. Tuan Pham:** 017645858098
+**Office:** 0911/123456 
+**Email:** info@naturapflegedienst.de
+**Hours:** Mon-Thu (8:00-15:00), Fri (9:00-14:00)
+**Emergency 24/7:** 017645858098
+
+We are always ready to assist you!`;
+
+    default:
+      return `📞 **Kontakt Natura Pflegedienst:**
+
+**Herr Tuan Pham:** 017645858098
+**Büro:** 0911/123456 
+**E-Mail:** info@naturapflegedienst.de
+**Öffnungszeiten:** Mo-Do (8:00-15:00), Fr (9:00-14:00)
+**Notfall 24/7:** 017645858098
+
+Wir stehen Ihnen gerne zur Verfügung!`;
+  }
 };
 
 export const getServiceOptions = (language: string) => {
