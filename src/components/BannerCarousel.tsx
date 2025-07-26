@@ -7,6 +7,7 @@ import banner2 from '@/assets/banner2.png';
 import banner3 from '@/assets/banner3.png';
 import banner4 from '@/assets/banner4.png';
 import banner5 from '@/assets/banner5.png';
+import NaturaLogo from '@/assets/NATURA.svg';
 
 const BannerCarousel = () => {
   const bannerImages = [
@@ -110,7 +111,7 @@ const BannerCarousel = () => {
           {/* Logo Background */}
           <div className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full bg-white/95 backdrop-blur-md shadow-2xl flex items-center justify-center transform transition-all duration-500 hover:scale-110">
             <img 
-              src="/lovable-uploads/7e9df2db-9333-4d29-85cc-b32f727b93cc.png" 
+              src={NaturaLogo} 
               alt="Natura Pflegedienst Logo"
               className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain"
             />

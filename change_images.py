@@ -49,6 +49,12 @@ class ImageChanger:
                 "path": self.public_dir,
                 "size_guide": "Khuyến nghị: 200x200px, nền trong suốt"
             },
+            "11": {
+                "name": "NATURA.svg",
+                "description": "🎯 Logo SVG banner carousel (scroll animation)",
+                "path": self.assets_dir,
+                "size_guide": "Khuyến nghị: Vector SVG, scalable"
+            },
             "6": {
                 "name": "banner1.png",
                 "description": "🎨 Banner carousel 1",
@@ -179,7 +185,7 @@ class ImageChanger:
             
             print("\n" + "="*60)
             print("🔧 TÙYCHỌN:")
-            print("1-10: Thay thế ảnh theo số")
+            print("1-11: Thay thế ảnh theo số")
             print("b   : Thay thế hàng loạt từ folder")
             print("q   : Thoát")
             print("="*60)
