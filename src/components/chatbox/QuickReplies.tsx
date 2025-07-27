@@ -17,12 +17,12 @@ const QuickReplies: React.FC<QuickRepliesProps> = ({ options, onSelect, isKnowle
   });
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3 mt-4">
       <div className="flex items-center justify-center gap-2">
-        <p className="text-xs text-gray-500">Schnelle Antworten:</p>
+        <p className="text-xs text-nature-sage font-source font-medium">Schnelle Antworten:</p>
         {isKnowledgeBased && (
-          <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
-            💡 KB
+          <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-medium">
+            💡 Smart
           </span>
         )}
       </div>
@@ -32,10 +32,10 @@ const QuickReplies: React.FC<QuickRepliesProps> = ({ options, onSelect, isKnowle
             key={index}
             onClick={() => onSelect(option.text)}
             variant="outline"
-            className={`justify-start text-sm h-auto py-2 px-3 transition-all duration-200 ${
+            className={`justify-start text-sm h-auto py-3 px-4 transition-all duration-200 rounded-xl font-source text-left leading-relaxed ${
               isKnowledgeBased 
-                ? 'hover:bg-green-500 hover:text-white border-green-500 text-green-700 bg-green-50'
-                : 'hover:bg-[#4A90E2] hover:text-white border-[#4A90E2] text-[#4A90E2]'
+                ? 'hover:bg-emerald-500 hover:text-white border-emerald-300 text-emerald-700 bg-emerald-50/50 hover:shadow-lg hover:scale-[1.02]'
+                : 'hover:bg-nature-sage hover:text-white border-nature-sage/30 text-nature-sage bg-nature-sage/5 hover:shadow-lg hover:scale-[1.02]'
             }`}
           >
             {option.emoji && <span className="mr-2">{option.emoji}</span>}

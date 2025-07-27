@@ -20,15 +20,15 @@ export function usePrintStyles() {
           width: 100%;
           max-width: 210mm;
           margin: 0;
-          padding: 20mm;
+          padding: 15mm;
           box-sizing: border-box;
-          font-size: 12pt;
-          line-height: 1.4;
+          font-size: 10pt;
+          line-height: 1.3;
         }
         
         @page {
           size: A4;
-          margin: 20mm;
+          margin: 15mm;
         }
         
         .no-print {
@@ -45,7 +45,77 @@ export function usePrintStyles() {
         
         h1, h2, h3, h4 {
           margin-top: 0;
+          margin-bottom: 6pt;
+        }
+        
+        .print-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 15pt;
+          padding-bottom: 10pt;
+          border-bottom: 1pt solid #ccc;
+        }
+        
+        .print-logo {
+          width: 40pt;
+          height: 40pt;
+          margin-right: 15pt;
+        }
+        
+        .print-company-info h1 {
+          font-size: 14pt;
+          margin: 0;
+          color: #005F72;
+        }
+        
+        .print-company-info p {
+          font-size: 9pt;
+          margin: 2pt 0;
+          color: #666;
+        }
+        
+        .print-section {
+          margin-bottom: 10pt;
+        }
+        
+        .print-section h3 {
+          font-size: 11pt;
+          margin-bottom: 4pt;
+          color: #005F72;
+        }
+        
+        .print-info-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10pt;
           margin-bottom: 8pt;
+        }
+        
+        .print-info-item {
+          border: 1pt solid #eee;
+          padding: 6pt;
+          border-radius: 3pt;
+        }
+        
+        .print-info-label {
+          font-weight: bold;
+          font-size: 9pt;
+          color: #666;
+          margin-bottom: 2pt;
+        }
+        
+        .print-info-value {
+          font-size: 10pt;
+          color: #333;
+        }
+        
+        .print-footer {
+          margin-top: 15pt;
+          padding-top: 10pt;
+          border-top: 1pt solid #ccc;
+          font-size: 8pt;
+          color: #666;
+          text-align: center;
         }
         
         p, div {

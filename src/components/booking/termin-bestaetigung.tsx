@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { usePrintStyles } from './print-styles';
+import naturaLogo from '@/assets/natura-logo.png';
 
 interface TerminBestaetigungProps {
   bookingData: any;
@@ -30,21 +31,32 @@ export function TerminBestaetigung({ bookingData, beraterInfo }: TerminBestaetig
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terminbestätigung - Natura Pflegedienst GmbH</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
   <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
-    .header { text-align: center; background: #005F72; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-    .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
-    .highlight { background: #E6F3F7; padding: 10px; border-radius: 5px; }
-    .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .contact-info { background: #f8f9fa; padding: 15px; border-radius: 8px; }
-    h1, h2, h3 { color: #005F72; }
-    .booking-id { font-weight: bold; color: #5DADE2; }
+    body { font-family: Arial, sans-serif; line-height: 1.4; max-width: 210mm; margin: 0 auto; padding: 15mm; font-size: 10pt; }
+    .header { display: flex; align-items: center; margin-bottom: 15pt; padding-bottom: 10pt; border-bottom: 1pt solid #ccc; }
+    .logo { width: 40pt; height: 40pt; margin-right: 15pt; }
+    .company-info h1 { font-size: 14pt; margin: 0; color: #005F72; }
+    .company-info p { font-size: 9pt; margin: 2pt 0; color: #666; }
+    .section { margin-bottom: 10pt; }
+    .section h3 { font-size: 11pt; margin-bottom: 4pt; color: #005F72; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; margin-bottom: 8pt; }
+    .info-item { border: 1pt solid #eee; padding: 6pt; border-radius: 3pt; }
+    .info-label { font-weight: bold; font-size: 9pt; color: #666; margin-bottom: 2pt; }
+    .info-value { font-size: 10pt; color: #333; }
+    .highlight { background: #E6F3F7; padding: 8pt; border-radius: 5pt; margin: 8pt 0; }
+    .footer { margin-top: 15pt; padding-top: 10pt; border-top: 1pt solid #ccc; font-size: 8pt; color: #666; text-align: center; }
+    .booking-id { font-weight: bold; color: #5DADE2; font-size: 11pt; }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>TERMINBESTÄTIGUNG</h1>
-    <h2>Natura Pflegedienst GmbH</h2>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAdgAAAHYBTnsmCAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAd8SURBVGiB7ZprbBTXFcd/587s7Oy+7LW9a68fxDYYGxuMwQaKCaFJE0KbpE1om6RN0jZp2qRt+qFf2jZp0zRNmzRp0zZNmzRN0zRN0zRN0zRN0zRN0zRN0zRN0zRN0zRN0zRN0zRN0zRN0zRN0zRNfv8zd2bv3Jm9M2s7" alt="Natura Logo" class="logo" />
+    <div class="company-info">
+      <h1>TERMINBESTÄTIGUNG</h1>
+      <p>Natura Pflegedienst GmbH</p>
+      <p>Pflegeberatung nach § 37.3 SGB XI</p>
+    </div>
   </div>
   
   <div class="highlight">
@@ -133,6 +145,13 @@ export function TerminBestaetigung({ bookingData, beraterInfo }: TerminBestaetig
     <div className="space-y-8 print-area">
       {/* Success Header */}
       <div className="text-center print-header">
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <img src={naturaLogo} alt="Natura Logo" className="w-12 h-12 print-logo" />
+          <div className="text-left">
+            <h1 className="text-xl font-bold text-nature-charcoal print-company-info">Natura Pflegedienst GmbH</h1>
+            <p className="text-sm text-muted-foreground">Pflegeberatung nach § 37.3 SGB XI</p>
+          </div>
+        </div>
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle className="w-8 h-8 text-green-600" />
         </div>

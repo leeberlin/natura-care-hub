@@ -19,32 +19,39 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isTyping }) => {
       {messages.map((message) => (
         <div
           key={message.id}
-          className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+          className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} group`}
         >
           <div
-            className={`max-w-[80%] rounded-lg px-3 py-2 ${
+            className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm transition-all duration-200 ${
               message.sender === 'user'
-                ? 'bg-[#4A90E2] text-white rounded-br-sm'
-                : 'bg-gray-100 text-gray-800 rounded-bl-sm'
+                ? 'bg-gradient-to-r from-nature-sage to-nature-teal text-white rounded-br-md'
+                : 'bg-white border border-nature-sage/10 text-nature-charcoal rounded-bl-md'
             }`}
           >
-            <p className="text-sm whitespace-pre-wrap">{message.text}</p>
-            <p className={`text-xs mt-1 ${
-              message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'
-            }`}>
-              {formatTime(message.timestamp)}
-            </p>
+            <p className="text-sm whitespace-pre-wrap font-source leading-relaxed">{message.text}</p>
+            <div className="flex items-center justify-between mt-2">
+              <p className={`text-xs font-source ${
+                message.sender === 'user' ? 'text-white/70' : 'text-muted-foreground'
+              }`}>
+                {formatTime(message.timestamp)}
+              </p>
+              {message.source === 'knowledge_base' && (
+                <span className="text-xs bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full font-medium">
+                  💡 Smart
+                </span>
+              )}
+            </div>
           </div>
         </div>
       ))}
       
       {isTyping && (
         <div className="flex justify-start">
-          <div className="bg-gray-100 rounded-lg rounded-bl-sm px-3 py-2">
+          <div className="bg-white border border-nature-sage/10 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
             <div className="flex space-x-1">
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              <div className="w-2 h-2 bg-nature-sage rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-nature-sage rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-nature-sage rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           </div>
         </div>

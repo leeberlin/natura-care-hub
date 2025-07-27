@@ -4,14 +4,24 @@ import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+// Import team images from assets
+import team1 from '@/assets/team.png';
+import team2 from '@/assets/team2.png';
+import team3 from '@/assets/team3.png';
+import team4 from '@/assets/team4.png';
+import team5 from '@/assets/team5.png';
+import team6 from '@/assets/team6.png';
+import team7 from '@/assets/team7.png';
+
 const Welcome = () => {
   const teamImages = [
-    { id: 1, src: '/team.png', alt: 'Natura Pflegedienst Team Mitglied 1' },
-    { id: 2, src: '/team2.png', alt: 'Natura Pflegedienst Team Mitglied 2' },
-    { id: 3, src: '/team3.png', alt: 'Natura Pflegedienst Team Mitglied 3' },
-    { id: 4, src: '/team4.png', alt: 'Natura Pflegedienst Team Mitglied 4' },
-    { id: 5, src: '/team5.png', alt: 'Natura Pflegedienst Team Mitglied 5' },
-    { id: 6, src: '/team6.png', alt: 'Natura Pflegedienst Team Mitglied 6' },
+    { id: 1, src: team1, alt: 'Natura Pflegedienst Team - Gemeinsam für Ihre Pflege' },
+    { id: 2, src: team2, alt: 'Natura Pflegedienst Team - Professionelle Betreuung' },
+    { id: 3, src: team3, alt: 'Natura Pflegedienst Team - Herzliche Pflege' },
+    { id: 4, src: team4, alt: 'Natura Pflegedienst Team - Kompetente Fachkräfte' },
+    { id: 5, src: team5, alt: 'Natura Pflegedienst Team - Vertrauensvolle Begleitung' },
+    { id: 6, src: team6, alt: 'Natura Pflegedienst Team - Individuelle Betreuung' },
+    { id: 7, src: team7, alt: 'Natura Pflegedienst Team - Liebevolle Unterstützung' },
   ];
 
   // Fallback images from placeholder_images if team images are not available
@@ -55,48 +65,76 @@ const Welcome = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Logo + Text */}
           <div className="space-y-8">
-            <div className="flex items-center space-x-4 mb-8">
-              <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center bg-white shadow-soft p-2">
-                <img 
-                  src="/lovable-uploads/7e9df2db-9333-4d29-85cc-b32f727b93cc.png" 
-                  alt="Natura Pflegedienst Logo"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-nature-charcoal font-nunito">
-                  Natura Pflegedienst GmbH
-                </h2>
-                <p className="text-nature-sage font-source">
-                  Ihr vertrauensvoller Partner
-                </p>
-              </div>
-            </div>
 
-            <div className="bg-white rounded-xl p-8 shadow-soft">
-              <h3 className="text-3xl md:text-4xl font-bold text-nature-charcoal mb-6 font-nunito leading-tight">
-                Willkommen bei Natura Pflegedienst GmbH
-              </h3>
+
+            <div className="bg-gradient-to-br from-white via-nature-cream/30 to-white rounded-2xl p-10 shadow-soft border border-nature-sage/10">
+              {/* Header Section */}
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center space-x-2 bg-nature-sage/10 px-4 py-2 rounded-full text-sm font-source text-nature-sage mb-4">
+                  <div className="w-2 h-2 bg-nature-sage rounded-full animate-pulse"></div>
+                  <span>Neu ab 2025</span>
+                </div>
+                
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-nature-charcoal mb-3 font-nunito leading-tight">
+                  Willkommen bei{" "}
+                  <span className="text-nature-sage">Natura Pflegedienst GmbH</span>
+                </h3>
+                
+                <h4 className="text-xl md:text-2xl font-semibold text-nature-coral mb-6 font-nunito">
+                  Moderne Pflege mit Herz und Verstand
+                </h4>
+              </div>
               
-              <div className="space-y-4 text-lg font-source text-muted-foreground leading-relaxed">
-                <p>
-                  <strong className="text-nature-sage">Wir starten ab 2025</strong> mit unserem 
-                  professionellen Pflegedienst in Nürnberg und Umgebung. Unser erfahrenes Team 
-                  freut sich darauf, Ihnen und Ihren Liebsten die bestmögliche Pflege und 
-                  Betreuung zu bieten.
-                </p>
+              {/* Content Grid */}
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="space-y-6">
+                  <div className="p-6 bg-white/70 rounded-xl border-l-4 border-nature-sage">
+                    <h5 className="font-bold text-nature-charcoal mb-3 font-nunito">🚀 Unser Start 2025</h5>
+                    <p className="text-muted-foreground font-source leading-relaxed">
+                      Wir starten ab 2025 mit einem jungen, dynamischen und leidenschaftlichen Team von Pflegefachkräften – bei uns steht die Leidenschaft für den Beruf immer an erster Stelle.
+                    </p>
+                  </div>
+                  
+                  <div className="p-6 bg-white/70 rounded-xl border-l-4 border-nature-coral">
+                    <h5 className="font-bold text-nature-charcoal mb-3 font-nunito">💡 Unsere Vision</h5>
+                    <p className="text-muted-foreground font-source leading-relaxed">
+                      Unsere Vision ist es, Pflege neu zu denken: modern, individuell und mit einem ganzheitlichen Ansatz, der die Bedürfnisse unserer Kunden in den Mittelpunkt stellt.
+                    </p>
+                  </div>
+                </div>
                 
-                <p>
-                  Mit über 15 Jahren Erfahrung in der Pflege stehen wir für Qualität, 
-                  Vertrauen und individuelle Betreuung. Unsere zertifizierten Pflegekräfte 
-                  sorgen dafür, dass Sie sich in Ihrem Zuhause sicher und geborgen fühlen.
-                </p>
-                
-                <div className="bg-nature-cream/50 rounded-lg p-4 mt-6">
-                  <p className="text-nature-charcoal font-semibold">
-                    💚 Bereits jetzt können Sie sich für eine kostenlose Beratung anmelden 
-                    und mehr über unsere Leistungen erfahren.
-                  </p>
+                <div className="space-y-6">
+                  <div className="p-6 bg-white/70 rounded-xl border-l-4 border-nature-teal">
+                    <h5 className="font-bold text-nature-charcoal mb-3 font-nunito">🔬 Innovation & Tradition</h5>
+                    <p className="text-muted-foreground font-source leading-relaxed">
+                      Wir sind überzeugt, dass Pflege mehr ist als nur medizinische Versorgung. Bei Natura Pflege verbinden wir traditionelle Fürsorge mit innovativen, technologiegestützten Konzepten.
+                    </p>
+                  </div>
+                  
+                  <div className="p-6 bg-white/70 rounded-xl border-l-4 border-nature-beige">
+                    <h5 className="font-bold text-nature-charcoal mb-3 font-nunito">✨ Qualitätsversprechen</h5>
+                    <p className="text-muted-foreground font-source leading-relaxed">
+                      Durch Transparenz, Nachhaltigkeit und kontinuierliche Weiterbildung stellen wir sicher, dass wir stets höchste Pflegequalität liefern.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Featured Slogan */}
+              <div className="text-center bg-gradient-to-r from-nature-sage/10 via-nature-teal/10 to-nature-sage/10 rounded-xl p-6 md:p-8">
+                <div className="max-w-4xl mx-auto">
+                  <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-nature-charcoal mb-4 md:mb-6 font-nunito leading-tight">
+                    Vertrauen Sie Natura Pflege
+                  </h4>
+                  
+                  <div className="space-y-3 md:space-y-4">
+                    <p className="text-lg md:text-xl lg:text-2xl font-bold text-nature-sage font-nunito leading-relaxed">
+                      Weil Ihre Gesundheit und Ihr Wohlbefinden in den besten Händen sind.
+                    </p>
+                    <p className="text-base md:text-lg text-muted-foreground font-source leading-relaxed">
+                      Eine Betreuung, die sowohl fachlich exzellent als auch menschlich nah ist.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

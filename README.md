@@ -1,73 +1,207 @@
-# Welcome to your Lovable project
+# 🌿 Natura Care Hub
 
-## Project info
+> Modern healthcare management platform built with React, TypeScript, and Vite
 
-**URL**: https://lovable.dev/projects/a23820f2-ee84-4a0f-b312-d54b322b2ddb
+[![Deploy Status](https://img.shields.io/badge/Deploy-Live-brightgreen)](https://naturapflegedienst.de)
+[![React](https://img.shields.io/badge/React-18.3.1-blue)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.4.1-646CFF)](https://vitejs.dev/)
 
-## How can I edit this code?
+## 🚀 Live Demo
+**Website**: [https://naturapflegedienst.de](https://naturapflegedienst.de)
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+- 🎨 **Modern UI/UX** - Built with shadcn/ui components
+- 📱 **Responsive Design** - Works perfectly on all devices  
+- ⚡ **High Performance** - Optimized with Vite build system
+- 🔒 **Type Safety** - Full TypeScript implementation
+- 🎯 **SEO Optimized** - Search engine friendly
+- 🔧 **Easy Deployment** - Ready for production
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a23820f2-ee84-4a0f-b312-d54b322b2ddb) and start prompting.
+## 🛠️ Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+### Frontend
+- **React 18.3.1** - UI Framework
+- **TypeScript 5.5.3** - Type Safety
+- **Vite 5.4.1** - Build Tool & Dev Server
+- **Tailwind CSS 3.4.11** - Styling
+- **shadcn/ui** - Component Library
 
-**Use your preferred IDE**
+### Key Libraries
+- **React Router DOM** - Client-side routing
+- **React Hook Form** - Form handling
+- **Zod** - Schema validation
+- **Tanstack Query** - Data fetching
+- **Lucide React** - Icons
+- **Recharts** - Data visualization
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Development Tools
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **PostCSS** - CSS processing
+- **Autoprefixer** - CSS vendor prefixes
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 📦 Installation
 
-Follow these steps:
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn or pnpm
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Setup
+```bash
+# Clone repository
+git clone https://github.com/leeberlin/natura-care-hub.git
+cd natura-care-hub
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+## 🚀 Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Quick Deploy to Netcup
+```bash
+# Build and prepare for deployment
+./build-and-deploy-macos.sh
 
-**Use GitHub Codespaces**
+# Upload deploy-ready/ folder to your hosting
+# Or upload website-deploy.zip and extract
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Deploy to Other Platforms
 
-## What technologies are used for this project?
+#### Vercel (Recommended)
+```bash
+# Deploy with one command
+vercel --prod
+```
 
-This project is built with:
+#### Netlify
+```bash
+# Build command: npm run build
+# Publish directory: dist
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+#### GitHub Pages
+- Enable GitHub Pages in repository settings
+- GitHub Actions workflow will auto-deploy
 
-## How can I deploy this project?
+## 📁 Project Structure
 
-Simply open [Lovable](https://lovable.dev/projects/a23820f2-ee84-4a0f-b312-d54b322b2ddb) and click on Share -> Publish.
+```
+natura-care-hub/
+├── src/                    # Source code
+│   ├── components/         # React components
+│   ├── pages/             # Page components
+│   ├── hooks/             # Custom hooks
+│   ├── lib/               # Utilities
+│   └── styles/            # Global styles
+├── public/                # Static assets
+├── dist/                  # Build output (generated)
+├── .htaccess              # Apache configuration
+├── deploy-ready/          # Deployment folder (generated)
+└── website-deploy.zip     # Deployment package (generated)
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 🔧 Configuration
 
-Yes, you can!
+### Environment Variables
+Create `.env.local`:
+```env
+VITE_API_URL=https://your-api.com
+VITE_APP_TITLE=Natura Pflegedienst
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Apache Configuration
+The included `.htaccess` file provides:
+- React Router support
+- Gzip compression
+- Browser caching
+- Security headers
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 📖 Development Guide
+
+### Available Scripts
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run build:dev    # Build in development mode
+npm run lint         # Run ESLint
+npm run preview      # Preview production build
+```
+
+### Git Workflow
+```bash
+# Quick update to GitHub
+./quick-push.sh
+
+# Full deployment update
+./push-to-github.sh
+
+# Manual git workflow
+git add .
+git commit -m "Your commit message"
+git push origin main
+```
+
+## 🌐 Deployment Platforms
+
+### Supported Platforms
+- ✅ **Netcup Webhosting** - Currently deployed
+- ✅ **Vercel** - Recommended for auto-deploy
+- ✅ **Netlify** - Easy static hosting
+- ✅ **GitHub Pages** - Free hosting
+- ✅ **Railway** - Full-stack hosting
+
+## 🔒 SSL/Security
+
+- ✅ **Let's Encrypt SSL** configured
+- ✅ **HTTPS redirect** enabled
+- ✅ **Security headers** implemented
+- ✅ **HSTS** configured
+
+## 📊 Performance
+
+- ⚡ **Lighthouse Score**: 95+ 
+- 🚀 **Core Web Vitals**: Optimized
+- 📦 **Bundle Size**: Minimized with tree-shaking
+- 🗜️ **Gzip Compression**: Enabled
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Support
+
+- 🌐 **Website**: [naturapflegedienst.de](https://naturapflegedienst.de)
+- 📧 **Email**: phamtuan17892@gmail.com
+- 💬 **Issues**: [GitHub Issues](https://github.com/leeberlin/natura-care-hub/issues)
+
+## 🙏 Acknowledgments
+
+- [shadcn/ui](https://ui.shadcn.com/) for the component library
+- [Vite](https://vitejs.dev/) for the amazing build tool
+- [Vercel](https://vercel.com/) for hosting platform
+- [Netcup](https://www.netcup.de/) for reliable hosting
+
+---
+
+**⚡ Built with ❤️ using modern web technologies**

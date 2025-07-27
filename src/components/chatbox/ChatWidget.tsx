@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Brain } from 'lucide-react';
+import { MessageCircle, X, Send, Brain, RefreshCw, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MessageList from './MessageList';
@@ -47,7 +47,7 @@ const ChatWidget = () => {
       sender,
       timestamp: new Date(),
       language,
-      source: source as any,
+      source: source as 'knowledge_base' | 'api' | 'fallback',
       suggestions
     };
     setMessages(prev => [...prev, newMessage]);
@@ -65,6 +65,32 @@ const ChatWidget = () => {
       setIsTyping(false);
       addMessage(getWelcomeMessage(language), 'bot', language);
     }, 1000);
+  };
+
+  const handleResetChat = () => {
+    setMessages([]);
+    setDetectedLanguage('de');
+    setStats({ knowledgeResponses: 0, apiCalls: 0, costSaved: 0 });
+    setInputMessage('');
+    setIsTyping(false);
+    
+    // Show welcome message after reset
+    setTimeout(() => {
+      const welcomeText = `Hallo! Wie können wir Ihnen bei Natura Pflegedienst helfen? 🌿
+
+Wählen Sie eine Option oder stellen Sie Ihre eigene Frage:`;
+      
+      const quickOptions = [
+        "Ich benötige eine Pflegeberatung",
+        "Ich brauche eine Haushaltshilfe", 
+        "Ich brauche Unterstützung bei der Körperpflege",
+        "Ich suche häusliche Krankenpflege",
+        "Welche Leistungen bietet Natura Pflegedienst an?",
+        "Kostenübernahme durch Pflegekasse"
+      ];
+      
+      addMessage(welcomeText, 'bot', 'de', 'knowledge_base', quickOptions);
+    }, 500);
   };
 
   const handleSendMessage = async () => {
@@ -135,61 +161,111 @@ const ChatWidget = () => {
     }
   };
 
+  const handleOpenChat = () => {
+    setIsOpen(true);
+    // Auto-start with welcome message if no messages exist
+    if (messages.length === 0) {
+      setTimeout(() => {
+        const welcomeText = `Hallo! Wie können wir Ihnen bei Natura Pflegedienst helfen? 🌿
+
+Wählen Sie eine Option oder stellen Sie Ihre eigene Frage:`;
+        
+        const quickOptions = [
+          "Ich benötige eine Pflegeberatung",
+          "Ich brauche eine Haushaltshilfe", 
+          "Ich brauche Unterstützung bei der Körperpflege",
+          "Ich suche häusliche Krankenpflege",
+          "Welche Leistungen bietet Natura Pflegedienst an?",
+          "Kostenübernahme durch Pflegekasse"
+        ];
+        
+        addMessage(welcomeText, 'bot', 'de', 'knowledge_base', quickOptions);
+      }, 800);
+    }
+  };
+
   if (!isOpen) {
     return (
       <div className="fixed bottom-6 right-6 z-50">
         <Button
-          onClick={() => setIsOpen(true)}
-          className="w-16 h-16 rounded-full bg-[#4A90E2] hover:bg-[#357ABD] text-white shadow-lg transform transition-all duration-300 hover:scale-110"
+          onClick={handleOpenChat}
+          className="w-16 h-16 rounded-full bg-gradient-to-r from-nature-sage to-nature-teal hover:from-nature-sage/90 hover:to-nature-teal/90 text-white shadow-2xl transform transition-all duration-300 hover:scale-110 group border-2 border-white/20"
           size="icon"
         >
-          <MessageCircle className="w-8 h-8" />
+          <div className="flex items-center justify-center">
+            <Sparkles className="w-7 h-7 group-hover:rotate-12 transition-transform duration-300" />
+          </div>
         </Button>
+        {/* Floating helper text */}
+        <div className="absolute -top-8 -right-2 bg-nature-sage text-white text-xs px-3 py-1 rounded-full shadow-lg animate-pulse whitespace-nowrap">
+          <span className="font-medium">Brauchen Sie Hilfe?</span>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <div className="bg-white rounded-lg shadow-2xl w-[350px] h-[500px] flex flex-col animate-fade-in border border-gray-200">
+      <div className="bg-white rounded-2xl shadow-2xl w-[380px] h-[600px] flex flex-col animate-fade-in border border-nature-sage/20 backdrop-blur-sm">
         {/* Header */}
-        <div className="bg-[#4A90E2] text-white p-4 rounded-t-lg flex items-center justify-between">
+        <div className="bg-gradient-to-r from-nature-sage to-nature-teal text-white p-4 rounded-t-2xl flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <Brain className="w-5 h-5 text-[#4A90E2]" />
+            <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+              <Sparkles className="w-5 h-5 text-nature-sage" />
             </div>
             <div>
-              <h3 className="font-semibold text-sm">Natura Pflegedienst</h3>
-              <p className="text-xs opacity-90">Smart AI Assistant</p>
+              <h3 className="font-bold text-base font-nunito">Natura Assistant</h3>
+              <p className="text-xs opacity-90 font-source">Ihre persönliche Pflegeberatung</p>
             </div>
           </div>
-          <Button
-            onClick={() => setIsOpen(false)}
-            variant="ghost"
-            size="icon"
-            className="text-white hover:bg-white/20"
-          >
-            <X className="w-5 h-5" />
-          </Button>
+          <div className="flex items-center space-x-2">
+            <Button
+              onClick={handleResetChat}
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/20 h-8 w-8"
+              title="Chat zurücksetzen"
+            >
+              <RefreshCw className="w-4 h-4" />
+            </Button>
+            <Button
+              onClick={() => setIsOpen(false)}
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/20 h-8 w-8"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
 
-        {/* Cost Optimization Stats */}
-        {(stats.knowledgeResponses > 0 || stats.apiCalls > 0) && (
-          <div className="bg-green-50 border-b border-green-200 p-2 text-xs">
-            <div className="flex items-center justify-between text-green-700">
-              <span>💡 Smart: {stats.knowledgeResponses} KB Antworten</span>
-              <span>💰 Gespart: ~{stats.costSaved.toFixed(2)}€</span>
+        {/* Status indicator - no cost display for customers */}
+        {stats.knowledgeResponses > 0 && (
+          <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-b border-emerald-200/50 p-3">
+            <div className="flex items-center justify-center text-emerald-700 text-xs font-source">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                <span className="font-medium">Natura Smart Assistant aktiv</span>
+              </div>
             </div>
           </div>
         )}
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gradient-to-b from-white to-nature-cream/10">
           {messages.length === 0 && (
-            <div className="text-center text-gray-500 text-sm py-8">
-              {detectedLanguage === 'vi' ? 'Xin chào! Hãy nhắn tin để bắt đầu cuộc trò chuyện.' :
-               detectedLanguage === 'en' ? 'Hello! Send a message to start the conversation.' :
-               'Hallo! Senden Sie eine Nachricht, um das Gespräch zu beginnen.'}
+            <div className="text-center text-muted-foreground py-8">
+              <div className="w-16 h-16 bg-nature-sage/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="w-8 h-8 text-nature-sage" />
+              </div>
+              <h4 className="font-semibold text-nature-charcoal mb-2 font-nunito">
+                Willkommen bei Natura Assistant
+              </h4>
+              <p className="text-sm font-source">
+                {detectedLanguage === 'vi' ? 'Xin chào! Hãy nhắn tin để bắt đầu cuộc trò chuyện.' :
+                 detectedLanguage === 'en' ? 'Hello! Send a message to start the conversation.' :
+                 'Stellen Sie Ihre Frage zur Pflege und Betreuung.'}
+              </p>
             </div>
           )}
           
@@ -207,27 +283,39 @@ const ChatWidget = () => {
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-gray-200">
-          <div className="flex space-x-2">
+        <div className="p-4 border-t border-nature-sage/10 bg-white rounded-b-2xl">
+          <div className="flex space-x-3">
             <Input
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={
-                detectedLanguage === 'vi' ? 'Nhập tin nhắn...' :
-                detectedLanguage === 'en' ? 'Type a message...' :
-                'Nachricht eingeben...'
+                detectedLanguage === 'vi' ? 'Ihre Nachricht...' :
+                detectedLanguage === 'en' ? 'Type your message...' :
+                'Ihre Nachricht eingeben...'
               }
-              className="flex-1"
+              className="flex-1 border-nature-sage/20 focus:border-nature-sage focus:ring-nature-sage/20 rounded-xl font-source"
+              disabled={isTyping}
             />
             <Button
               onClick={handleSendMessage}
-              className="bg-[#4A90E2] hover:bg-[#357ABD] text-white"
+              disabled={isTyping || !inputMessage.trim()}
+              className="bg-gradient-to-r from-nature-sage to-nature-teal hover:from-nature-sage/90 hover:to-nature-teal/90 text-white rounded-xl px-4 shadow-lg transition-all duration-200 disabled:opacity-50"
               size="icon"
             >
               <Send className="w-4 h-4" />
             </Button>
           </div>
+          {isTyping && (
+            <div className="flex items-center space-x-2 mt-2 text-nature-sage text-xs font-source">
+              <div className="flex space-x-1">
+                <div className="w-1 h-1 bg-nature-sage rounded-full animate-bounce"></div>
+                <div className="w-1 h-1 bg-nature-sage rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-1 h-1 bg-nature-sage rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              </div>
+              <span>Assistant tippt...</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -26,6 +26,7 @@ const BannerCarousel = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [isLogoVisible, setIsLogoVisible] = useState(false);
+  const [logoKey, setLogoKey] = useState(0); // For animation trigger
 
   const scrollTo = useCallback(
     (index: number) => emblaApi && emblaApi.scrollTo(index),
@@ -35,6 +36,8 @@ const BannerCarousel = () => {
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
+    // Trigger logo animation on slide change
+    setLogoKey(prev => prev + 1);
   }, [emblaApi]);
 
   useEffect(() => {
@@ -53,7 +56,8 @@ const BannerCarousel = () => {
       setScrollY(currentScrollY);
       
       // Show logo when user scrolls down (after 100px)
-      setIsLogoVisible(currentScrollY > 100);
+      const shouldShow = currentScrollY > 100;
+      setIsLogoVisible(shouldShow);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -76,7 +80,7 @@ const BannerCarousel = () => {
                     e.currentTarget.style.display = 'none';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-hero opacity-20"></div>
+
               </div>
             </div>
           ))}
@@ -100,27 +104,15 @@ const BannerCarousel = () => {
         ))}
       </div>
 
-      {/* Scroll-triggered Logo Overlay */}
-      <div className={cn(
-        "absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-700 ease-out z-20",
-        isLogoVisible 
-          ? "opacity-100 transform scale-100" 
-          : "opacity-0 transform scale-75"
-      )}>
-        <div className="relative">
-          {/* Logo Background */}
-          <div className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full bg-white/95 backdrop-blur-md shadow-2xl flex items-center justify-center transform transition-all duration-500 hover:scale-110">
-            <img 
-              src={NaturaLogo} 
-              alt="Natura Pflegedienst Logo"
-              className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain"
-            />
-          </div>
-          
-          {/* Pulsing Ring Animation */}
-          <div className="absolute inset-0 rounded-full border-4 border-nature-sage animate-ping opacity-30"></div>
-          <div className="absolute inset-2 rounded-full border-2 border-nature-coral animate-pulse opacity-50"></div>
-        </div>
+      {/* Logo with Slide Animation - Near Bottom */}
+      <div className="absolute inset-x-0 bottom-4 flex justify-center pointer-events-none z-20">
+        <img 
+          key={logoKey}
+          src="/NATURA.svg" 
+          alt="Natura Pflegedienst Logo"
+          className="w-80 h-80 md:w-[460px] md:h-[460px] lg:w-[600px] lg:h-[600px] object-contain drop-shadow-2xl 
+                     animate-[fadeInScale_0.8s_ease-out]"
+        />
       </div>
     </section>
   );

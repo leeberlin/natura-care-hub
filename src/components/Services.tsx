@@ -9,9 +9,13 @@ import {
   Shield,
   ArrowRight
 } from "lucide-react";
-import careAssistanceImage from "@/assets/care-assistance.jpg";
-import householdHelpImage from "@/assets/household-help.jpg";
-import companionCareImage from "@/assets/companion-care.jpg";
+// Import new service images from uploaded assets
+import grundpflegeImg from "@/assets/Grundpflege/grundpflege.jpg";
+import haushaltshilfeImg from "@/assets/HWS/hws1.png";
+import betreuungImg from "@/assets/Beratung/beratung.png";
+import behandlungspflegeImg from "@/assets/haeusliche-krankenpflege/medikamentengabe.png";
+import verhinderungspflegeImg from "@/assets/HWS/hws3.png";
+import pflegeberatungImg from "@/assets/Beratung/beratung3.png";
 
 const Services = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
@@ -21,7 +25,7 @@ const Services = () => {
       title: "Grundpflege",
       description: "Körperpflege, Mobilisation und medizinische Grundversorgung durch qualifizierte Pflegekräfte.",
       icon: Heart,
-      image: careAssistanceImage,
+      image: grundpflegeImg,
       features: ["Körperpflege", "Medikamentengabe", "Mobilisation", "Wundversorgung"]
     },
     {
@@ -29,7 +33,7 @@ const Services = () => {
       title: "Hauswirtschaft",
       description: "Unterstützung im Haushalt, Einkaufen, Kochen und Reinigung für mehr Lebensqualität.",
       icon: Home,
-      image: householdHelpImage,
+      image: haushaltshilfeImg,
       features: ["Einkaufen", "Kochen", "Reinigung", "Wäschepflege"]
     },
     {
@@ -37,7 +41,7 @@ const Services = () => {
       title: "Betreuungsleistungen",
       description: "Soziale Betreuung, Gespräche und Aktivitäten für geistige und emotionale Unterstützung.",
       icon: Users,
-      image: companionCareImage,
+      image: betreuungImg,
       features: ["Gespräche", "Spaziergänge", "Vorlesen", "Gesellschaftsspiele"]
     },
     {
@@ -45,7 +49,7 @@ const Services = () => {
       title: "Behandlungspflege",
       description: "Medizinische Versorgung nach ärztlicher Verordnung durch examinierte Pflegefachkräfte.",
       icon: Stethoscope,
-      image: careAssistanceImage,
+      image: behandlungspflegeImg,
       features: ["Injektionen", "Verbandswechsel", "Medizinische Überwachung", "Therapiebegleitung"]
     },
     {
@@ -53,16 +57,16 @@ const Services = () => {
       title: "Verhinderungspflege",
       description: "Entlastung für pflegende Angehörige mit stundenweiser oder tageweiser Betreuung.",
       icon: Clock,
-      image: companionCareImage,
+      image: verhinderungspflegeImg,
       features: ["Stundenweise Entlastung", "Urlaubsvertretung", "Notfallbetreuung", "Flexible Zeiten"]
     },
     {
-      id: "intensive",
-      title: "24-Stunden-Betreuung",
-      description: "Rund-um-die-Uhr Betreuung und Pflege in der gewohnten häuslichen Umgebung.",
-      icon: Shield,
-      image: householdHelpImage,
-      features: ["24/7 Betreuung", "Nachtbereitschaft", "Intensivpflege", "Palliativpflege"]
+      id: "consultation",
+      title: "Pflegeberatung",
+      description: "Zertifizierte Beratung nach § 37.3 SGB XI - Vollständig kostenfrei durch Pflegekassenfinanzierung.",
+      icon: Users,
+      image: pflegeberatungImg,
+      features: ["Garantierte Kostenübernahme durch Pflegekasse", "§ 37.3 SGB XI", "Pflegegradantrag", "Individuelle Lösungen"]
     }
   ];
 
@@ -100,7 +104,8 @@ const Services = () => {
                   <img 
                     src={service.image} 
                     alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                    style={{ objectPosition: 'center 30%' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                   <div className="absolute bottom-4 left-4">

@@ -12,7 +12,7 @@ const Hero = () => {
             <div className="space-y-4">
               <div className="inline-flex items-center space-x-2 bg-nature-cream/60 px-4 py-2 rounded-full text-sm font-source text-nature-charcoal">
                 <Heart className="h-4 w-4 text-nature-coral" />
-                <span>Seit über 15 Jahren an Ihrer Seite</span>
+                <span>Neu ab Oktober 2025 für Sie da</span>
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-nature-charcoal leading-tight font-nunito">
@@ -29,12 +29,14 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="coral" size="lg" className="font-nunito group">
-                Kostenlose Beratung vereinbaren
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <Button variant="coral" size="lg" className="font-nunito group" asChild>
+                <a href="/digital-beratung">
+                  Kostenlose Beratung vereinbaren
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
-              <Button variant="cream" size="lg" className="font-nunito">
-                Mehr erfahren
+              <Button variant="cream" size="lg" className="font-nunito" asChild>
+                <a href="/about">Mehr erfahren</a>
               </Button>
             </div>
 
@@ -48,12 +50,12 @@ const Hero = () => {
             {/* Trust indicators */}
             <div className="flex items-center space-x-8 pt-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-nature-sage font-nunito">15+</div>
-                <div className="text-sm text-muted-foreground font-source">Jahre Erfahrung</div>
+                <div className="text-2xl font-bold text-nature-sage font-nunito">2025</div>
+                <div className="text-sm text-muted-foreground font-source">Neuer Start</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-nature-sage font-nunito">500+</div>
-                <div className="text-sm text-muted-foreground font-source">Zufriedene Familien</div>
+                <div className="text-2xl font-bold text-nature-sage font-nunito">100%</div>
+                <div className="text-sm text-muted-foreground font-source">Qualifiziert</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-nature-sage font-nunito">24/7</div>

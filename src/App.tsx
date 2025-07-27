@@ -17,6 +17,7 @@ import AGB from "./pages/AGB";
 import DigitalBooking from "./pages/DigitalBooking";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import PrivacyConsent from "./components/PrivacyConsent";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <PrivacyConsent />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />

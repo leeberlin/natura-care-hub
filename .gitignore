@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Build and deployment files
+deploy-ready/
+website-deploy.zip
+*.tar.gz
+*.zip
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +28,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Cursor AI files
+.cursor/
+
+# macOS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Deploy scripts (optional - comment out if you want to keep them)
+# build-fresh.*
+# deploy-netcup.*
+# build-and-deploy-macos.sh
